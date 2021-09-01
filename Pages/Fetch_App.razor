@@ -1,0 +1,56 @@
+@page "/fetchapp"
+
+@using BlazorSupervisionRBI.Data
+@inject OverviewService Service
+
+@if (itemSymantec == null || itemVeeam == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    <table>
+        <tr><th colspan=@itemSymantec.Count>Symantec</th></tr>
+        <tr>
+            @foreach (var item in itemSymantec)
+            {
+                <td>
+                    <div class="card" style="width: 18rem;">
+                        <img src="ressources/@(item.severity).png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.countSeverity application(s)</h5>
+                            <a href="#" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </td>
+            }
+        </tr>
+        <tr><th colspan=@itemVeeam.Count>Veeam</th></tr>
+        <tr>
+            @foreach (var item in itemVeeam)
+            {
+                <td>
+                    <div class="card" style="width: 18rem;">
+                        <img src="ressources/@(item.severity).png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.countSeverity application(s)</h5>
+                            <a href="#" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </td>
+            }
+        </tr>
+    </table>
+}
+
+@code {
+    private List<Overview> itemSymantec;
+    private List<Overview> itemVeeam;
+    protected override async Task OnInitializedAsync()
+    {
+        itemSymantec = await Service.GetAppBySeverityAsync("Symantec");
+        itemVeeam = await Service.GetAppBySeverityAsync("Veeam");
+        StateHasChanged();
+    }
+}

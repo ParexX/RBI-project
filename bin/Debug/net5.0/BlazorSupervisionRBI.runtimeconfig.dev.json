@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\ADOMEON\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\ADOMEON\\.nuget\\packages"
+    ]
+  }
+}
