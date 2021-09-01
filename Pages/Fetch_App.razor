@@ -3,6 +3,7 @@
 @using BlazorSupervisionRBI.Data
 @inject OverviewService OverviewService
 @inject DetailsNodeService DetailsNodeService
+@inject DysfunctionalHardwareService DysfunctionalHardwareService
 
 @if (overviewSymantec == null || overviewVeeam == null)
 {
@@ -47,6 +48,31 @@ else
                 </div>
             </div>
         }
+    </div>
+
+    <div class="d-inline-block">
+        <ul class="list-group list-group">
+            @foreach (var item in hardwareInfoByNode)
+            {
+                <li class="list-group-item list-group-item-primary">Hardware alert on @item[1] : <em>@item[2]</em></li>
+                <li class="list-group-item" style ="text-align:center">@foreach (var category in categoryByHardwareInfo[(int)@item[0]])
+                    {
+                        @category <span>&nbsp</span>}</li>
+            }
+        </ul>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse"
+            aria-expanded="false" aria-controls="#collapse">
+            </button>
+        </h2>
+        <div class="accordion-collapse collapse" id="collapse" aria-labelledby="header" data-bs-parent="#accordionHardware">
+            <div class="accordion-body">
+
+            </div>
+        </div>
     </div>
 
     <table>
@@ -100,6 +126,8 @@ else
 {27, new List<string>{"disabled","grey"}}
 };
     private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
+    private Dictionary<int, List<string>> categoryByHardwareInfo = new Dictionary<int, List<string>>();
+    List<List<object>> hardwareInfoByNode = new List<List<object>>();
     protected override async Task OnInitializedAsync()
     {
         overviewSymantec = await OverviewService.GetAppBySeverityAsync("Symantec");
@@ -111,6 +139,21 @@ else
             List<DetailsNode> singleDetailList = await DetailsNodeService.GetDetailsNodeAsync(item.severity);
             detailsNodeBySeverity.Add(item.severity, singleDetailList);
         }
+
+        foreach (var item in await DysfunctionalHardwareService.GetDysfunctionalHardwareAsync())
+        {
+            if (categoryByHardwareInfo.ContainsKey(item.hardwareInfoID))
+            {
+                categoryByHardwareInfo[item.hardwareInfoID].Add(item.categoryName);
+            }
+            else
+            {
+                categoryByHardwareInfo.Add(item.hardwareInfoID, new List<string>() { item.categoryName });
+                hardwareInfoByNode.Add(new List<object>() { item.hardwareInfoID, item.nodeName, item.alertMessage });
+            }
+        }
+
+
         StateHasChanged();
     }
 }
