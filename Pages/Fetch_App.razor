@@ -1,19 +1,60 @@
 @page "/fetchapp"
 
 @using BlazorSupervisionRBI.Data
-@inject OverviewService Service
+@inject OverviewService OverviewService
+@inject DetailsNodeService DetailsNodeService
 
-@if (itemSymantec == null || itemVeeam == null)
+@if (overviewSymantec == null || overviewVeeam == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
+    <div class="accordion" style="width:500px" id="accordionNode">
+        @foreach (var item in overviewNode)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="header@(item.severity)">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse@(item.severity)" aria-expanded="false"
+                aria-controls="collapse@(item.severity)">
+                        @item.countSeverity node(s) in @statusLayout[item.severity][0] state
+                    </button>
+                </h2>
+                <div id="collapse@(item.severity)" class="accordion-collapse collapse" aria-labelledby="header@(item.severity)"
+            data-bs-parent="#accordionNode">
+                    <div class="accordion-body">
+                        <table class="table table-striped" style="width:100%,padding:0px;">
+                            <thead>
+                                <tr>
+                                    <th>Node Name</th>
+                                    <th>Customer Code</th>
+                                    <th>CS Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in detailsNodeBySeverity[item.severity])
+                                {
+                                    <tr>
+                                        <td>@detail.nodeName</td>
+                                        <td>@detail.codeClient</td>
+                                        <td>@detail.codeCS</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 
     <table>
-        <tr><th colspan=@itemSymantec.Count>Symantec</th></tr>
         <tr>
-            @foreach (var item in itemSymantec)
+            <th colspan=@overviewSymantec.Count>Symantec</th>
+        </tr>
+        <tr>
+            @foreach (var item in overviewSymantec)
             {
                 <td>
                     <div class="card" style="width: 18rem;">
@@ -26,9 +67,11 @@ else
                 </td>
             }
         </tr>
-        <tr><th colspan=@itemVeeam.Count>Veeam</th></tr>
         <tr>
-            @foreach (var item in itemVeeam)
+            <th colspan=@overviewVeeam.Count>Veeam</th>
+        </tr>
+        <tr>
+            @foreach (var item in overviewVeeam)
             {
                 <td>
                     <div class="card" style="width: 18rem;">
@@ -45,12 +88,29 @@ else
 }
 
 @code {
-    private List<Overview> itemSymantec;
-    private List<Overview> itemVeeam;
+    private List<Overview> overviewSymantec;
+    private List<Overview> overviewVeeam;
+    private List<Overview> overviewNode;
+    private Dictionary<int, List<string>> statusLayout = new Dictionary<int, List<string>>(){
+{0,new List<string>{"unknown","lighblue"}},
+{2,new List<string>{"down","tomato"}},
+{3,new List<string>{"warning","gold"}},
+{12, new List<string>{"unreachable","mediumblue"}},
+{14, new List<string>{"critical","red"}},
+{27, new List<string>{"disabled","grey"}}
+};
+    private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
     protected override async Task OnInitializedAsync()
     {
-        itemSymantec = await Service.GetAppBySeverityAsync("Symantec");
-        itemVeeam = await Service.GetAppBySeverityAsync("Veeam");
+        overviewSymantec = await OverviewService.GetAppBySeverityAsync("Symantec");
+        overviewVeeam = await OverviewService.GetAppBySeverityAsync("Veeam");
+        overviewNode = await OverviewService.GetNodeBySeverityAsync();
+
+        foreach (var item in overviewNode)
+        {
+            List<DetailsNode> singleDetailList = await DetailsNodeService.GetDetailsNodeAsync(item.severity);
+            detailsNodeBySeverity.Add(item.severity, singleDetailList);
+        }
         StateHasChanged();
     }
 }
