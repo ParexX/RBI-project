@@ -4,6 +4,7 @@
 @inject OverviewService OverviewService
 @inject DetailsNodeService DetailsNodeService
 @inject DysfunctionalHardwareService DysfunctionalHardwareService
+@inject DetailsAPMService DetailsAPMService
 
 @if (overviewSymantec == null || overviewVeeam == null)
 {
@@ -69,19 +70,62 @@ else
 
 
 
-
-    <div class="accordion-item">
-        <h2 class="accordion-header" id="header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse"
-            aria-expanded="false" aria-controls="#collapse">
-            </button>
-        </h2>
-        <div class="accordion-collapse collapse" id="collapse" aria-labelledby="header" data-bs-parent="#accordionHardware">
-            <div class="accordion-body">
-
+    <div class="accordion" id="accordionSymantec">
+        @foreach (var item in overviewSymantec)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headerr@(item.severity)">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsee@(item.severity)" aria-expanded="false"
+                aria-controls="#collapsee@(item.severity)">
+                        @item.countSeverity application(s) in @statusLayout[@item.severity][0] state
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse" id="collapsee@(item.severity)" aria-labelledby="headerr@(item.severity)"
+            data-bs-parent="#accordionSymantec">
+                    <div class="accordion-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Application Name</th>
+                                    <th>Node Name</th>
+                                    <th>Details Component</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var application in detailsSymantecAppBySeverity[item.severity])
+                                {
+                                    <tr>
+                                        <td>@application.applicationName</td>
+                                        <td>@application.nodeName</td>
+                                        <td>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="header@(application.applicationID)">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(application.applicationID)" aria-expanded="false">
+                                                        @detailsComponentByApp[@application.applicationID].Count dysfunctional components 
+                                                    </button>
+                                                </h2>
+                                                <div class="accordion-collapse collapse" id="collapse@(application.applicationID)">
+                                                    <div class="accordion-body">
+                                                        @foreach (var component in detailsComponentByApp[@application.applicationID])
+                                                        {
+                                                            <span><i class="bi bi-circle-fill" style="color:@(statusLayout[component.componentStatus][1])"></i>&nbsp @component.componentName <br/></span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
+        }
+
     </div>
+
 
     <table>
         <tr>
@@ -136,6 +180,9 @@ else
     private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
     private Dictionary<int, List<string>> categoryByHardwareInfo = new Dictionary<int, List<string>>();
     List<List<object>> hardwareInfoByNode = new List<List<object>>();
+    Dictionary<int, List<DetailsAPM>> detailsSymantecAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
+    Dictionary<int, List<DetailsComponent>> detailsComponentByApp = new Dictionary<int, List<DetailsComponent>>();
+
     protected override async Task OnInitializedAsync()
     {
         overviewSymantec = await OverviewService.GetAppBySeverityAsync("Symantec");
@@ -161,7 +208,21 @@ else
             }
         }
 
+        foreach (var item in overviewSymantec)
+        {
+            List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Symantec");
+            detailsSymantecAppBySeverity.Add(item.severity, singleDetailList);
+        }
 
+        foreach (var list in detailsSymantecAppBySeverity.Values)
+        {
+            foreach (var item in list)
+            {
+                List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
+                detailsComponentByApp.Add(item.applicationID, singleComponentList);
+            }
+
+        }
         StateHasChanged();
     }
 }
