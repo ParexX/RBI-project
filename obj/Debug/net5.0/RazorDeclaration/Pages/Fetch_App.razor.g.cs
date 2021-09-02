@@ -118,7 +118,7 @@ using BlazorSupervisionRBI.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 168 "C:\Users\ADOMEON\BlazorSupervisionRBI\Pages\Fetch_App.razor"
+#line 195 "C:\Users\ADOMEON\BlazorSupervisionRBI\Pages\Fetch_App.razor"
        
     private List<Overview> overviewSymantec;
     private List<Overview> overviewVeeam;
@@ -135,6 +135,7 @@ using BlazorSupervisionRBI.Data;
     private Dictionary<int, List<string>> categoryByHardwareInfo = new Dictionary<int, List<string>>();
     List<List<object>> hardwareInfoByNode = new List<List<object>>();
     Dictionary<int, List<DetailsAPM>> detailsSymantecAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
+    Dictionary<int, List<DetailsAPM>> detailsVeeamAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
     Dictionary<int, List<DetailsComponent>> detailsComponentByApp = new Dictionary<int, List<DetailsComponent>>();
 
     protected override async Task OnInitializedAsync()
@@ -175,7 +176,21 @@ using BlazorSupervisionRBI.Data;
                 List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
                 detailsComponentByApp.Add(item.applicationID, singleComponentList);
             }
+        }
 
+        foreach (var item in overviewVeeam)
+        {
+            List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Veeam");
+            detailsVeeamAppBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var list in detailsVeeamAppBySeverity.Values)
+        {
+            foreach (var item in list)
+            {
+                List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
+                detailsComponentByApp.Add(item.applicationID, singleComponentList);
+            }
         }
         StateHasChanged();
     }

@@ -12,77 +12,74 @@
 }
 else
 {
-    <div class="d-flex justify-content-between" style="width:100%">
-        <div class="accordion" style="width:500px" id="accordionNode">
-            <h2 class="text-center"> Node severity</h2>
-            @foreach (var item in overviewNode)
-            {
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="header@(item.severity)">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse@(item.severity)" aria-expanded="false"
-                    aria-controls="collapse@(item.severity)">
-                            @item.countSeverity node(s) in @statusLayout[item.severity][0] state
-                        </button>
-                    </h2>
-                    <div id="collapse@(item.severity)" class="accordion-collapse collapse"
-                aria-labelledby="header@(item.severity)" data-bs-parent="#accordionNode">
-                        <div class="accordion-body">
-                            <table class="table table-striped" style="width:100%,padding:0px;">
-                                <thead>
+
+    <div class="accordion" style="width:500px" id="accordionNode">
+        <h2 class="text-center"> Node severity</h2>
+        @foreach (var item in overviewNode)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="header@(item.severity)">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse@(item.severity)" aria-expanded="false"
+                aria-controls="collapse@(item.severity)">
+                        @item.countSeverity node(s) in @statusLayout[item.severity][0] state
+                    </button>
+                </h2>
+                <div id="collapse@(item.severity)" class="accordion-collapse collapse" aria-labelledby="header@(item.severity)"
+            data-bs-parent="#accordionNode">
+                    <div class="accordion-body">
+                        <table class="table table-striped" style="width:100%,padding:0px;">
+                            <thead>
+                                <tr>
+                                    <th>Node Name</th>
+                                    <th>Customer Code</th>
+                                    <th>CS Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in detailsNodeBySeverity[item.severity])
+                                {
                                     <tr>
-                                        <th>Node Name</th>
-                                        <th>Customer Code</th>
-                                        <th>CS Code</th>
+                                        <td>@detail.nodeName</td>
+                                        <td>@detail.codeClient</td>
+                                        <td>@detail.codeCS</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var detail in detailsNodeBySeverity[item.severity])
-                                    {
-                                        <tr>
-                                            <td>@detail.nodeName</td>
-                                            <td>@detail.codeClient</td>
-                                            <td>@detail.codeCS</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
+        }
+    </div>
+    <div class="d-inline-block">
+        <h2 class="text-center"> Hardware alert </h2>
+        <ul class="list-group list-group">
+            @foreach (var item in hardwareInfoByNode)
+            {
+                <li class="list-group-item list-group-item-primary">Hardware alert on @item[1] : <em>@item[2]</em></li>
+                <li class="list-group-item" style="text-align:center">@foreach (var category in
+            categoryByHardwareInfo[(int)@item[0]])
+                    {
+                        @category <span>&nbsp</span>}</li>
             }
-        </div>
-        <div class="d-inline-block">
-            <h2 class="text-center"> Hardware alert </h2>
-            <ul class="list-group list-group">
-                @foreach (var item in hardwareInfoByNode)
-                {
-                    <li class="list-group-item list-group-item-primary">Hardware alert on @item[1] : <em>@item[2]</em></li>
-                    <li class="list-group-item" style="text-align:center">@foreach (var category in
-                categoryByHardwareInfo[(int)@item[0]])
-                        {
-                            @category <span>&nbsp</span>}</li>
-                }
-            </ul>
-        </div>
+        </ul>
     </div>
 
-
-
-
     <div class="accordion" id="accordionSymantec">
+        <h2 class="text-center"> Symantec alert </h2>
         @foreach (var item in overviewSymantec)
         {
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headerr@(item.severity)">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsee@(item.severity)" aria-expanded="false"
                 aria-controls="#collapsee@(item.severity)">
                         @item.countSeverity application(s) in @statusLayout[@item.severity][0] state
                     </button>
                 </h2>
-                <div class="accordion-collapse collapse" id="collapsee@(item.severity)" aria-labelledby="headerr@(item.severity)"
-            data-bs-parent="#accordionSymantec">
+                <div class="accordion-collapse collapse" id="collapsee@(item.severity)"
+            aria-labelledby="headerr@(item.severity)" data-bs-parent="#accordionSymantec">
                     <div class="accordion-body">
                         <table class="table table-striped">
                             <thead>
@@ -101,15 +98,21 @@ else
                                         <td>
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="header@(application.applicationID)">
-                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse@(application.applicationID)" aria-expanded="false">
-                                                        @detailsComponentByApp[@application.applicationID].Count dysfunctional components 
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse@(application.applicationID)"
+                                            aria-expanded="false">
+                                                        @detailsComponentByApp[@application.applicationID].Count dysfunctional
+                                                        components
                                                     </button>
                                                 </h2>
                                                 <div class="accordion-collapse collapse" id="collapse@(application.applicationID)">
                                                     <div class="accordion-body">
-                                                        @foreach (var component in detailsComponentByApp[@application.applicationID])
+                                                        @foreach (var component in
+                                                       detailsComponentByApp[@application.applicationID])
                                                         {
-                                                            <span><i class="bi bi-circle-fill" style="color:@(statusLayout[component.componentStatus][1])"></i>&nbsp @component.componentName <br/></span>
+                                                            <span><i class="bi bi-circle-fill"
+                                                    style="color:@(statusLayout[component.componentStatus][1])"></i>&nbsp
+                                                                @component.componentName <br /></span>
                                                         }
                                                     </div>
                                                 </div>
@@ -123,46 +126,70 @@ else
                 </div>
             </div>
         }
-
     </div>
 
+    <div class="accordion" id="accordionVeeam">
+        <h2 class="text-center"> Veeam alert </h2>
+        @foreach (var item in overviewVeeam)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headerrr@(item.severity)">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseee@(item.severity)" aria-expanded="false"
+                aria-controls="#collapseee@(item.severity)">
+                        @item.countSeverity application(s) in @statusLayout[@item.severity][0] state
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse" id="collapseee@(item.severity)"
+            aria-labelledby="headerrr@(item.severity)" data-bs-parent="#accordionVeeam">
+                    <div class="accordion-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Application Name</th>
+                                    <th>Node Name</th>
+                                    <th>Details Component</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var application in detailsVeeamAppBySeverity[item.severity])
+                                {
+                                    <tr>
+                                        <td>@application.applicationName</td>
+                                        <td>@application.nodeName</td>
+                                        <td>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="header@(application.applicationID)">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse@(application.applicationID)"
+                                            aria-expanded="false">
+                                                        @detailsComponentByApp[@application.applicationID].Count dysfunctional
+                                                        components
+                                                    </button>
+                                                </h2>
+                                                <div class="accordion-collapse collapse" id="collapse@(application.applicationID)">
+                                                    <div class="accordion-body">
+                                                        @foreach (var component in
+                                                       detailsComponentByApp[@application.applicationID])
+                                                        {
+                                                            <span><i class="bi bi-circle-fill"
+                                                    style="color:@(statusLayout[component.componentStatus][1])"></i>&nbsp
+                                                                @component.componentName <br /></span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 
-    <table>
-        <tr>
-            <th colspan=@overviewSymantec.Count>Symantec</th>
-        </tr>
-        <tr>
-            @foreach (var item in overviewSymantec)
-            {
-                <td>
-                    <div class="card" style="width: 18rem;">
-                        <img src="ressources/@(item.severity).png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">@item.countSeverity application(s)</h5>
-                            <a href="#" class="btn btn-primary">Details</a>
-                        </div>
-                    </div>
-                </td>
-            }
-        </tr>
-        <tr>
-            <th colspan=@overviewVeeam.Count>Veeam</th>
-        </tr>
-        <tr>
-            @foreach (var item in overviewVeeam)
-            {
-                <td>
-                    <div class="card" style="width: 18rem;">
-                        <img src="ressources/@(item.severity).png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">@item.countSeverity application(s)</h5>
-                            <a href="#" class="btn btn-primary">Details</a>
-                        </div>
-                    </div>
-                </td>
-            }
-        </tr>
-    </table>
 }
 
 @code {
@@ -181,6 +208,7 @@ else
     private Dictionary<int, List<string>> categoryByHardwareInfo = new Dictionary<int, List<string>>();
     List<List<object>> hardwareInfoByNode = new List<List<object>>();
     Dictionary<int, List<DetailsAPM>> detailsSymantecAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
+    Dictionary<int, List<DetailsAPM>> detailsVeeamAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
     Dictionary<int, List<DetailsComponent>> detailsComponentByApp = new Dictionary<int, List<DetailsComponent>>();
 
     protected override async Task OnInitializedAsync()
@@ -221,7 +249,21 @@ else
                 List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
                 detailsComponentByApp.Add(item.applicationID, singleComponentList);
             }
+        }
 
+        foreach (var item in overviewVeeam)
+        {
+            List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Veeam");
+            detailsVeeamAppBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var list in detailsVeeamAppBySeverity.Values)
+        {
+            foreach (var item in list)
+            {
+                List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
+                detailsComponentByApp.Add(item.applicationID, singleComponentList);
+            }
         }
         StateHasChanged();
     }
