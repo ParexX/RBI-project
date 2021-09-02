@@ -1,4 +1,4 @@
-@page "/fetchapp"
+@page "/"
 
 @using BlazorSupervisionRBI.Data
 @inject OverviewService OverviewService
@@ -11,56 +11,64 @@
 }
 else
 {
-    <div class="accordion" style="width:500px" id="accordionNode">
-        @foreach (var item in overviewNode)
-        {
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="header@(item.severity)">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse@(item.severity)" aria-expanded="false"
-                aria-controls="collapse@(item.severity)">
-                        @item.countSeverity node(s) in @statusLayout[item.severity][0] state
-                    </button>
-                </h2>
-                <div id="collapse@(item.severity)" class="accordion-collapse collapse" aria-labelledby="header@(item.severity)"
-            data-bs-parent="#accordionNode">
-                    <div class="accordion-body">
-                        <table class="table table-striped" style="width:100%,padding:0px;">
-                            <thead>
-                                <tr>
-                                    <th>Node Name</th>
-                                    <th>Customer Code</th>
-                                    <th>CS Code</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var detail in detailsNodeBySeverity[item.severity])
-                                {
+    <div class="d-flex justify-content-between" style="width:100%">
+        <div class="accordion" style="width:500px" id="accordionNode">
+            <h2 class="text-center"> Node severity</h2>
+            @foreach (var item in overviewNode)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="header@(item.severity)">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse@(item.severity)" aria-expanded="false"
+                    aria-controls="collapse@(item.severity)">
+                            @item.countSeverity node(s) in @statusLayout[item.severity][0] state
+                        </button>
+                    </h2>
+                    <div id="collapse@(item.severity)" class="accordion-collapse collapse"
+                aria-labelledby="header@(item.severity)" data-bs-parent="#accordionNode">
+                        <div class="accordion-body">
+                            <table class="table table-striped" style="width:100%,padding:0px;">
+                                <thead>
                                     <tr>
-                                        <td>@detail.nodeName</td>
-                                        <td>@detail.codeClient</td>
-                                        <td>@detail.codeCS</td>
+                                        <th>Node Name</th>
+                                        <th>Customer Code</th>
+                                        <th>CS Code</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var detail in detailsNodeBySeverity[item.severity])
+                                    {
+                                        <tr>
+                                            <td>@detail.nodeName</td>
+                                            <td>@detail.codeClient</td>
+                                            <td>@detail.codeCS</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
+        <div class="d-inline-block">
+            <h2 class="text-center"> Hardware alert </h2>
+            <ul class="list-group list-group">
+                @foreach (var item in hardwareInfoByNode)
+                {
+                    <li class="list-group-item list-group-item-primary">Hardware alert on @item[1] : <em>@item[2]</em></li>
+                    <li class="list-group-item" style="text-align:center">@foreach (var category in
+                categoryByHardwareInfo[(int)@item[0]])
+                        {
+                            @category <span>&nbsp</span>}</li>
+                }
+            </ul>
+        </div>
     </div>
 
-    <div class="d-inline-block">
-        <ul class="list-group list-group">
-            @foreach (var item in hardwareInfoByNode)
-            {
-                <li class="list-group-item list-group-item-primary">Hardware alert on @item[1] : <em>@item[2]</em></li>
-                <li class="list-group-item" style ="text-align:center">@foreach (var category in categoryByHardwareInfo[(int)@item[0]])
-                    {
-                        @category <span>&nbsp</span>}</li>
-            }
-        </ul>
-    </div>
+
+
+
 
     <div class="accordion-item">
         <h2 class="accordion-header" id="header">

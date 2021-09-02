@@ -29,7 +29,6 @@ namespace BlazorSupervisionRBI
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<OverviewService>();
             services.AddSingleton<DetailsAPMService>();
             services.AddSingleton<DetailsNodeService>();
