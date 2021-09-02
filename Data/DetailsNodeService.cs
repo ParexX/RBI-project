@@ -19,7 +19,7 @@ namespace BlazorSupervisionRBI.Data
             builder.InitialCatalog = "OrionSQL";
 
 
-            string sql = $"SELECT NodeName, CodeClient, CodeCS, Status FROM Node  WHERE Status ={nodeStatus};";
+            string sql = $"SELECT NodeName, CodeClient, CodeCS, Status, DetailsUrl FROM Node  WHERE Status ={nodeStatus};";
             try
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -39,6 +39,7 @@ namespace BlazorSupervisionRBI.Data
                                     codeClient = reader.GetString(1),
                                     codeCS = reader.GetString(2),
                                     nodeStatus = reader.GetInt32(3),
+                                    detailsUrl = reader.GetString(4)
 
                                 });
                             }

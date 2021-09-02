@@ -8,5 +8,6 @@ namespace BlazorSupervisionRBI.Data
         public string categoryName{get;set;}
         public string nodeName{get;set;}
         public string alertMessage{get;set;}
+        public string detailsUrl{get;set;}
     }
 }
