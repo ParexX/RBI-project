@@ -118,7 +118,7 @@ using BlazorSupervisionRBI.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 124 "c:\Users\ADOMEON\blazorsupervisionrbi\Pages\Fetch_App.razor"
+#line 195 "c:\Users\ADOMEON\blazorsupervisionrbi\Pages\Fetch_App.razor"
        
     private List<Overview> overviewSymantec;
     private List<Overview> overviewVeeam;
@@ -134,6 +134,10 @@ using BlazorSupervisionRBI.Data;
     private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
     private Dictionary<int, List<string>> categoryByHardwareInfo = new Dictionary<int, List<string>>();
     List<List<object>> hardwareInfoByNode = new List<List<object>>();
+    Dictionary<int, List<DetailsAPM>> detailsSymantecAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
+    Dictionary<int, List<DetailsAPM>> detailsVeeamAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
+    Dictionary<int, List<DetailsComponent>> detailsComponentByApp = new Dictionary<int, List<DetailsComponent>>();
+
     protected override async Task OnInitializedAsync()
     {
         overviewSymantec = await OverviewService.GetAppBySeverityAsync("Symantec");
@@ -159,13 +163,42 @@ using BlazorSupervisionRBI.Data;
             }
         }
 
+        foreach (var item in overviewSymantec)
+        {
+            List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Symantec");
+            detailsSymantecAppBySeverity.Add(item.severity, singleDetailList);
+        }
 
+        foreach (var list in detailsSymantecAppBySeverity.Values)
+        {
+            foreach (var item in list)
+            {
+                List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
+                detailsComponentByApp.Add(item.applicationID, singleComponentList);
+            }
+        }
+
+        foreach (var item in overviewVeeam)
+        {
+            List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Veeam");
+            detailsVeeamAppBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var list in detailsVeeamAppBySeverity.Values)
+        {
+            foreach (var item in list)
+            {
+                List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
+                detailsComponentByApp.Add(item.applicationID, singleComponentList);
+            }
+        }
         StateHasChanged();
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DetailsAPMService DetailsAPMService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private DysfunctionalHardwareService DysfunctionalHardwareService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private DetailsNodeService DetailsNodeService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private OverviewService OverviewService { get; set; }

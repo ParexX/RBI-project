@@ -62,7 +62,7 @@ namespace BlazorSupervisionRBI.Data
             }
         }
 
-        public Task<List<DetailsComponent>> GetDetailsComponentAsync()
+        public Task<List<DetailsComponent>> GetDetailsComponentAsync(int applicationID)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "SRVJIRA\\SQLJIRA";
@@ -71,7 +71,7 @@ namespace BlazorSupervisionRBI.Data
             builder.InitialCatalog = "OrionSQL";
 
 
-            string sql = $"SELECT ComponentName, Status, ApplicationID FROM Component LEFT JOIN Application A ON A.ID = ApplicationID";
+            string sql = $"SELECT ComponentName, SeverityStatus, ApplicationID FROM Component LEFT JOIN Application A ON A.ID = ApplicationID WHERE ApplicationID={applicationID} AND SeverityStatus <>1";
             try
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -89,7 +89,7 @@ namespace BlazorSupervisionRBI.Data
                                 {
                                     componentName = reader.GetString(0),
                                     componentStatus = reader.GetInt32(1),
-                                    applicationId = reader.GetInt32(3)
+                                    applicationId = reader.GetInt32(2)
                                 });
                             }
                             connection.Close();
