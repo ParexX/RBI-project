@@ -4,7 +4,7 @@
 #pragma warning disable 0649
 #pragma warning disable 0169
 
-namespace BlazorSupervisionRBI.Shared
+namespace BlazorSupervisionRBI.Pages
 {
     #line hidden
     using System.Collections.Generic;
@@ -109,7 +109,8 @@ using System.Data.SqlClient;
 #line default
 #line hidden
 #nullable disable
-    public partial class SurveyPrompt : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/Node")]
+    public partial class Node : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -117,15 +118,52 @@ using System.Data.SqlClient;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 12 "C:\Users\ADOMEON\BlazorSupervisionRBI\Shared\SurveyPrompt.razor"
+#line 83 "C:\Users\ADOMEON\BlazorSupervisionRBI\Pages\Node.razor"
        
-    // Demonstrates how a parent component can supply parameters
-    [Parameter]
-    public string Title { get; set; }
+    private List<Overview> overviewNode;
+    private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
+    private Dictionary<string, List<DetailsNode>> detailsNodeByCustomer = new Dictionary<string, List<DetailsNode>>();
+    private Dictionary<string, int> statusByCustomer = new Dictionary<string, int>();
+    protected override async Task OnInitializedAsync()
+    {
+        overviewNode = await OverviewService.GetNodeBySeverityAsync();
+        foreach (var item in overviewNode)
+        {
+            List<DetailsNode> singleDetailList = await DetailsNodeService.GetDetailsNodeBySeverityAsync(item.severity);
+            detailsNodeBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var item in await DetailsNodeService.GetDetailsNodeAsync())
+        {
+            if (detailsNodeByCustomer.ContainsKey(item.codeClient))
+            {
+                detailsNodeByCustomer[item.codeClient].Add(item);
+            }
+            else
+            {
+                detailsNodeByCustomer.Add(item.codeClient, new List<DetailsNode>() { item });
+                List<Overview> singleList = await OverviewService.GetSeverityByCustomerAsync(item.codeClient);
+                int max = 0;
+                for (int i = 0; i < singleList.Count; i++)
+                {
+                    for (int j = i; j < singleList.Count; j++)
+                    {
+                        if (Math.Max(singleList[i].severity, singleList[j].severity) > max)
+                        {
+                            max = Math.Max(singleList[i].severity, singleList[j].severity);
+                        }
+                    }
+                }
+                statusByCustomer.Add(item.codeClient, max);
+            }
+        }
+    }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DetailsNodeService DetailsNodeService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private OverviewService OverviewService { get; set; }
     }
 }
 #pragma warning restore 1591

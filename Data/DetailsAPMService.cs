@@ -72,7 +72,7 @@ namespace BlazorSupervisionRBI.Data
             builder.InitialCatalog = "OrionSQL";
 
 
-            string sql = $"SELECT ComponentName, SeverityStatus, ApplicationID, Component.DetailsUrl FROM Component LEFT JOIN Application A ON A.ID = ApplicationID WHERE ApplicationID={applicationID} AND SeverityStatus <>1";
+            string sql = $"SELECT ComponentName, SeverityStatus, ApplicationID, Component.DetailsUrl FROM Component LEFT JOIN Application A ON A.ID = ApplicationID WHERE ApplicationID={applicationID} AND SeverityStatus <>1 ORDER BY SeverityStatus DESC ";
             try
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))

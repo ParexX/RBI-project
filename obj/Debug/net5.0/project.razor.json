@@ -78,6 +78,39 @@
         }
       },
       {
+        "HashCode": -1544104979,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.Node",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Node"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Node"
+        }
+      },
+      {
+        "HashCode": -1771293947,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.Node",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorSupervisionRBI.Pages.Node"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Node",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": -1646758555,
         "Kind": "Components.Component",
         "Name": "BlazorSupervisionRBI.App",
@@ -15922,6 +15955,11 @@
     {
       "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Shared\\SurveyPrompt.razor",
       "TargetPath": "Shared\\SurveyPrompt.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\Node.razor",
+      "TargetPath": "Pages\\Node.razor",
       "FileKind": "component"
     },
     {
