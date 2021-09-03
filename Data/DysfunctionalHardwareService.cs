@@ -20,7 +20,7 @@ namespace BlazorSupervisionRBI.Data
 
 
             string sql = $"SELECT HardwareInfoID, C.CategoryName,N.NodeName,HI.LastMessage, HI.DetailsUrl FROM Hardware RIGHT JOIN HardwareInfo HI ON HI.ID = HardwareInfoID";
-            sql+=$" LEFT JOIN Node N ON NodeID = N.ID LEFT JOIN Category C ON CategoryID = C.ID WHERE HI.Status = 17";
+            sql+=$" LEFT JOIN Node N ON NodeID = N.ID LEFT JOIN Category C ON CategoryID = C.ID WHERE HI.Status = 17 ORDER BY NodeName";
             try
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))

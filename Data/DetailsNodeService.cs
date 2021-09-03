@@ -19,7 +19,7 @@ namespace BlazorSupervisionRBI.Data
             builder.InitialCatalog = "OrionSQL";
 
 
-            string sql = $"SELECT NodeName, CodeClient, CodeCS, Status, DetailsUrl FROM Node  WHERE Status ={nodeStatus};";
+            string sql = $"SELECT NodeName, CodeClient, CodeCS, Status, DetailsUrl FROM Node  WHERE Status ={nodeStatus} ORDER BY NodeName;";
             try
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
