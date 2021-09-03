@@ -19,7 +19,7 @@ namespace BlazorSupervisionRBI.Data
             builder.InitialCatalog = "OrionSQL";
 
 
-            string sql = "SELECT N.NodeName, N.Status, AT.ApplicationTemplateName, A.ID";
+            string sql = "SELECT N.NodeName, N.Status, AT.ApplicationTemplateName, A.ID, A.DetailsUrl";
             sql+=" FROM Application A INNER JOIN Node N ON A.NodeID = N.ID LEFT JOIN ApplicationTemplate AT ON ";
             sql+="A.ApplicationTemplateID = AT.ID LEFT JOIN Tag T ON AT.ID = T.TemplateID ";
             sql+=$"WHERE A.Status = {appStatus} AND T.TagName = '{software}';" ;
@@ -41,7 +41,8 @@ namespace BlazorSupervisionRBI.Data
                                     nodeName = reader.GetString(0),
                                     nodeStatus = reader.GetInt32(1),
                                     applicationName = reader.GetString(2),
-                                    applicationID = reader.GetInt32(3)
+                                    applicationID = reader.GetInt32(3),
+                                    detailsUrl = reader.GetString(4)
                                 });
                             }
                             connection.Close();
@@ -62,7 +63,7 @@ namespace BlazorSupervisionRBI.Data
             }
         }
 
-        public Task<List<DetailsComponent>> GetDetailsComponentAsync()
+        public Task<List<DetailsComponent>> GetDetailsComponentAsync(int applicationID)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "SRVJIRA\\SQLJIRA";
@@ -71,7 +72,7 @@ namespace BlazorSupervisionRBI.Data
             builder.InitialCatalog = "OrionSQL";
 
 
-            string sql = $"SELECT ComponentName, Status, ApplicationID FROM Component LEFT JOIN Application A ON A.ID = ApplicationID";
+            string sql = $"SELECT ComponentName, SeverityStatus, ApplicationID, Component.DetailsUrl FROM Component LEFT JOIN Application A ON A.ID = ApplicationID WHERE ApplicationID={applicationID} AND SeverityStatus <>1";
             try
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -89,7 +90,8 @@ namespace BlazorSupervisionRBI.Data
                                 {
                                     componentName = reader.GetString(0),
                                     componentStatus = reader.GetInt32(1),
-                                    applicationId = reader.GetInt32(3)
+                                    applicationId = reader.GetInt32(2),
+                                    detailsUrl = reader.GetString(3)
                                 });
                             }
                             connection.Close();

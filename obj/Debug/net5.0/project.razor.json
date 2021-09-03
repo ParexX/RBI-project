@@ -78,72 +78,6 @@
         }
       },
       {
-        "HashCode": -196981187,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.FetchData",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "FetchData"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.FetchData"
-        }
-      },
-      {
-        "HashCode": 1254835815,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.FetchData",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorSupervisionRBI.Pages.FetchData"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.FetchData",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": 1230857542,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Index",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "Index"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Index"
-        }
-      },
-      {
-        "HashCode": -1769188894,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Index",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorSupervisionRBI.Pages.Index"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Index",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
         "HashCode": -1646758555,
         "Kind": "Components.Component",
         "Name": "BlazorSupervisionRBI.App",
@@ -15976,19 +15910,9 @@
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\Index.razor",
-      "TargetPath": "Pages\\Index.razor",
-      "FileKind": "component"
-    },
-    {
       "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\Error.cshtml",
       "TargetPath": "Pages\\Error.cshtml",
       "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\FetchData.razor",
-      "TargetPath": "Pages\\FetchData.razor",
-      "FileKind": "component"
     },
     {
       "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Shared\\MainLayout.razor",

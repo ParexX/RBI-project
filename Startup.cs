@@ -29,10 +29,10 @@ namespace BlazorSupervisionRBI
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<OverviewService>();
             services.AddSingleton<DetailsAPMService>();
             services.AddSingleton<DetailsNodeService>();
+            services.AddSingleton<DysfunctionalHardwareService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

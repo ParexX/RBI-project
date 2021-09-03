@@ -6,5 +6,6 @@ namespace BlazorSupervisionRBI {
         public int nodeStatus{get;set;}
         public string applicationName{get;set;}
         public int applicationID{get;set;}
+        public string detailsUrl{get;set;}
     }
 }

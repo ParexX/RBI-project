@@ -109,7 +109,7 @@ using BlazorSupervisionRBI.Data;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/fetchapp")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/")]
     public partial class Fetch_App : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -118,8 +118,9 @@ using BlazorSupervisionRBI.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 90 "c:\Users\ADOMEON\blazorsupervisionrbi\Pages\Fetch_App.razor"
+#line 203 "c:\Users\ADOMEON\blazorsupervisionrbi\Pages\Fetch_App.razor"
        
+    private string solarWindsLink = "http://supervision.cloudrbi.com";
     private List<Overview> overviewSymantec;
     private List<Overview> overviewVeeam;
     private List<Overview> overviewNode;
@@ -132,6 +133,12 @@ using BlazorSupervisionRBI.Data;
 {27, new List<string>{"disabled","grey"}}
 };
     private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
+    private Dictionary<int, List<DysfunctionalHardware>> categoryByHardwareInfo = new Dictionary<int, List<DysfunctionalHardware>>();
+    List<DysfunctionalHardware> hardwareInfoByNode = new List<DysfunctionalHardware>();
+    Dictionary<int, List<DetailsAPM>> detailsSymantecAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
+    Dictionary<int, List<DetailsAPM>> detailsVeeamAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
+    Dictionary<int, List<DetailsComponent>> detailsComponentByApp = new Dictionary<int, List<DetailsComponent>>();
+
     protected override async Task OnInitializedAsync()
     {
         overviewSymantec = await OverviewService.GetAppBySeverityAsync("Symantec");
@@ -143,12 +150,59 @@ using BlazorSupervisionRBI.Data;
             List<DetailsNode> singleDetailList = await DetailsNodeService.GetDetailsNodeAsync(item.severity);
             detailsNodeBySeverity.Add(item.severity, singleDetailList);
         }
+
+        foreach (var item in await DysfunctionalHardwareService.GetDysfunctionalHardwareAsync())
+        {
+            if (categoryByHardwareInfo.ContainsKey(item.hardwareInfoID))
+            {
+                categoryByHardwareInfo[item.hardwareInfoID].Add(new DysfunctionalHardware { categoryName = item.categoryName });
+            }
+            else
+            {
+                categoryByHardwareInfo.Add(item.hardwareInfoID, new List<DysfunctionalHardware>() {new DysfunctionalHardware {categoryName = item.categoryName }});
+                hardwareInfoByNode.Add(new DysfunctionalHardware{
+                    hardwareInfoID = item.hardwareInfoID, nodeName = item.nodeName, detailsUrl = item.detailsUrl, alertMessage = item.alertMessage
+                    });
+            }
+        }
+
+        foreach (var item in overviewSymantec)
+        {
+            List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Symantec");
+            detailsSymantecAppBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var list in detailsSymantecAppBySeverity.Values)
+        {
+            foreach (var item in list)
+            {
+                List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
+                detailsComponentByApp.Add(item.applicationID, singleComponentList);
+            }
+        }
+
+        foreach (var item in overviewVeeam)
+        {
+            List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Veeam");
+            detailsVeeamAppBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var list in detailsVeeamAppBySeverity.Values)
+        {
+            foreach (var item in list)
+            {
+                List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
+                detailsComponentByApp.Add(item.applicationID, singleComponentList);
+            }
+        }
         StateHasChanged();
     }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DetailsAPMService DetailsAPMService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DysfunctionalHardwareService DysfunctionalHardwareService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private DetailsNodeService DetailsNodeService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private OverviewService OverviewService { get; set; }
     }

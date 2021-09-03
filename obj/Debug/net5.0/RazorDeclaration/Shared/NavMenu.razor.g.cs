@@ -117,7 +117,7 @@ using System.Data.SqlClient;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 23 "c:\Users\ADOMEON\blazorsupervisionrbi\Shared\NavMenu.razor"
+#line 18 "c:\Users\ADOMEON\blazorsupervisionrbi\Shared\NavMenu.razor"
        
     private bool collapseNavMenu = true;
 

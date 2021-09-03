@@ -8,9 +8,9 @@ using BlazorSupervisionRBI;
 
 namespace BlazorSupervisionRBI.Data
 {
-    public class DetailsNodeService
+    public class DysfunctionalHardwareService
     {
-        public Task<List<DetailsNode>> GetDetailsNodeAsync(int nodeStatus)
+        public Task<List<DysfunctionalHardware>> GetDysfunctionalHardwareAsync()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "SRVJIRA\\SQLJIRA";
@@ -19,7 +19,8 @@ namespace BlazorSupervisionRBI.Data
             builder.InitialCatalog = "OrionSQL";
 
 
-            string sql = $"SELECT NodeName, CodeClient, CodeCS, Status, DetailsUrl FROM Node  WHERE Status ={nodeStatus} ORDER BY NodeName;";
+            string sql = $"SELECT HardwareInfoID, C.CategoryName,N.NodeName,HI.LastMessage, HI.DetailsUrl FROM Hardware RIGHT JOIN HardwareInfo HI ON HI.ID = HardwareInfoID";
+            sql+=$" LEFT JOIN Node N ON NodeID = N.ID LEFT JOIN Category C ON CategoryID = C.ID WHERE HI.Status = 17 ORDER BY NodeName";
             try
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
@@ -30,17 +31,16 @@ namespace BlazorSupervisionRBI.Data
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            List<DetailsNode> items = new List<DetailsNode>();
+                            List<DysfunctionalHardware> items = new List<DysfunctionalHardware>();
                             while (reader.Read())
                             {
-                                items.Add(new DetailsNode
+                                items.Add(new DysfunctionalHardware
                                 {
-                                    nodeName = reader.GetString(0),
-                                    codeClient = reader.GetString(1),
-                                    codeCS = reader.GetString(2),
-                                    nodeStatus = reader.GetInt32(3),
+                                    hardwareInfoID = reader.GetInt32(0),
+                                    categoryName = reader.GetString(1),
+                                    nodeName = reader.GetString(2),
+                                    alertMessage = reader.GetString(3),
                                     detailsUrl = reader.GetString(4)
-
                                 });
                             }
                             connection.Close();

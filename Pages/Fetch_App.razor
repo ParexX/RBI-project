@@ -1,8 +1,10 @@
-@page "/fetchapp"
+@page "/"
 
 @using BlazorSupervisionRBI.Data
 @inject OverviewService OverviewService
 @inject DetailsNodeService DetailsNodeService
+@inject DysfunctionalHardwareService DysfunctionalHardwareService
+@inject DetailsAPMService DetailsAPMService
 
 @if (overviewSymantec == null || overviewVeeam == null)
 {
@@ -10,7 +12,17 @@
 }
 else
 {
+    <div class="positon-absolute top-0 end-100">
+        <h3>Legend</h3>
+        <div class="list-group">
+            @foreach (var item in statusLayout.Values)
+            {
+                <span><i class="bi bi-circle-fill" style="color:@(item[1])"></i>&nbsp @item[0] </span>
+            }
+        </div>
+    </div>
     <div class="accordion" style="width:500px" id="accordionNode">
+        <h2 class="text-center"> Node severity</h2>
         @foreach (var item in overviewNode)
         {
             <div class="accordion-item">
@@ -36,7 +48,7 @@ else
                                 @foreach (var detail in detailsNodeBySeverity[item.severity])
                                 {
                                     <tr>
-                                        <td>@detail.nodeName</td>
+                                        <td><a href=@(solarWindsLink+detail.detailsUrl) class="link" style="text-decoration: none">@detail.nodeName</a></td>
                                         <td>@detail.codeClient</td>
                                         <td>@detail.codeCS</td>
                                     </tr>
@@ -48,46 +60,148 @@ else
             </div>
         }
     </div>
+    <div class="d-inline-block">
+        <h2 class="text-center"> Hardware alert </h2>
+        <ul class="list-group list-group">
+            @foreach (var item in hardwareInfoByNode)
+            {
+                <a href="@(solarWindsLink+item.detailsUrl)" class="list-group-item list-group-item-action list-group-item-primary" style="text-decoration: none;">Hardware alert on @item.nodeName : <em>@item.alertMessage</em></a>
+                <li class="list-group-item" style="text-align:center">@foreach (var category in
+            categoryByHardwareInfo[item.hardwareInfoID])
+                    {
+                        @category.categoryName <span>&nbsp</span>}</li>
+            }
+        </ul>
+    </div>
 
-    <table>
-        <tr>
-            <th colspan=@overviewSymantec.Count>Symantec</th>
-        </tr>
-        <tr>
-            @foreach (var item in overviewSymantec)
-            {
-                <td>
-                    <div class="card" style="width: 18rem;">
-                        <img src="ressources/@(item.severity).png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">@item.countSeverity application(s)</h5>
-                            <a href="#" class="btn btn-primary">Details</a>
-                        </div>
+    <div class="accordion" id="accordionSymantec">
+        <h2 class="text-center"> Symantec alert </h2>
+        @foreach (var item in overviewSymantec)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headerr@(item.severity)">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsee@(item.severity)" aria-expanded="false"
+                aria-controls="#collapsee@(item.severity)">
+                        @item.countSeverity application(s) in @statusLayout[@item.severity][0] state
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse" id="collapsee@(item.severity)"
+            aria-labelledby="headerr@(item.severity)" data-bs-parent="#accordionSymantec">
+                    <div class="accordion-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Application Name</th>
+                                    <th>Node Name</th>
+                                    <th>Details Component</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var application in detailsSymantecAppBySeverity[item.severity])
+                                {
+                                    <tr>
+                                        <td><a href="@(solarWindsLink+application.detailsUrl)" class="link" style="text-decoration: none;">@application.applicationName</a></td>
+                                        <td>@application.nodeName</td>
+                                        <td>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="header@(application.applicationID)">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse@(application.applicationID)"
+                                            aria-expanded="false">
+                                                        @detailsComponentByApp[@application.applicationID].Count dysfunctional
+                                                        components
+                                                    </button>
+                                                </h2>
+                                                <div class="accordion-collapse collapse" id="collapse@(application.applicationID)">
+                                                    <div class="accordion-body">
+                                                        @foreach (var component in
+                                                       detailsComponentByApp[@application.applicationID])
+                                                        {
+                                                            <span><i class="bi bi-circle-fill"
+                                                    style="color:@(statusLayout[component.componentStatus][1])"></i>&nbsp
+                                                               <a href="@(solarWindsLink+component.detailsUrl)" class="link" style="text-decoration: none;"> @component.componentName </a><br /></span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-            }
-        </tr>
-        <tr>
-            <th colspan=@overviewVeeam.Count>Veeam</th>
-        </tr>
-        <tr>
-            @foreach (var item in overviewVeeam)
-            {
-                <td>
-                    <div class="card" style="width: 18rem;">
-                        <img src="ressources/@(item.severity).png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">@item.countSeverity application(s)</h5>
-                            <a href="#" class="btn btn-primary">Details</a>
-                        </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="accordion" id="accordionVeeam">
+        <h2 class="text-center"> Veeam alert </h2>
+        @foreach (var item in overviewVeeam)
+        {
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headerrr@(item.severity)">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseee@(item.severity)" aria-expanded="false"
+                aria-controls="#collapseee@(item.severity)">
+                        @item.countSeverity application(s) in @statusLayout[@item.severity][0] state
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse" id="collapseee@(item.severity)"
+            aria-labelledby="headerrr@(item.severity)" data-bs-parent="#accordionVeeam">
+                    <div class="accordion-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Application Name</th>
+                                    <th>Node Name</th>
+                                    <th>Details Component</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var application in detailsVeeamAppBySeverity[item.severity])
+                                {
+                                    <tr>
+                                        <td><a href="@(solarWindsLink+application.detailsUrl)" class="link" style="text-decoration: none;">@application.applicationName</a></td>
+                                        <td>@application.nodeName</td>
+                                        <td>
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="header@(application.applicationID)">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse@(application.applicationID)"
+                                            aria-expanded="false">
+                                                        @detailsComponentByApp[@application.applicationID].Count dysfunctional
+                                                        components
+                                                    </button>
+                                                </h2>
+                                                <div class="accordion-collapse collapse" id="collapse@(application.applicationID)">
+                                                    <div class="accordion-body">
+                                                        @foreach (var component in
+                                                       detailsComponentByApp[@application.applicationID])
+                                                        {
+                                                            <span><i class="bi bi-circle-fill"
+                                                    style="color:@(statusLayout[component.componentStatus][1])"></i>&nbsp
+                                                                <a href="@(solarWindsLink+component.detailsUrl)" class="link" style="text-decoration: none;">@component.componentName</a><br /></span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
-                </td>
-            }
-        </tr>
-    </table>
+                </div>
+            </div>
+        }
+    </div>
+
 }
 
 @code {
+    private string solarWindsLink = "http://supervision.cloudrbi.com";
     private List<Overview> overviewSymantec;
     private List<Overview> overviewVeeam;
     private List<Overview> overviewNode;
@@ -100,6 +214,12 @@ else
 {27, new List<string>{"disabled","grey"}}
 };
     private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
+    private Dictionary<int, List<DysfunctionalHardware>> categoryByHardwareInfo = new Dictionary<int, List<DysfunctionalHardware>>();
+    List<DysfunctionalHardware> hardwareInfoByNode = new List<DysfunctionalHardware>();
+    Dictionary<int, List<DetailsAPM>> detailsSymantecAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
+    Dictionary<int, List<DetailsAPM>> detailsVeeamAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
+    Dictionary<int, List<DetailsComponent>> detailsComponentByApp = new Dictionary<int, List<DetailsComponent>>();
+
     protected override async Task OnInitializedAsync()
     {
         overviewSymantec = await OverviewService.GetAppBySeverityAsync("Symantec");
@@ -110,6 +230,51 @@ else
         {
             List<DetailsNode> singleDetailList = await DetailsNodeService.GetDetailsNodeAsync(item.severity);
             detailsNodeBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var item in await DysfunctionalHardwareService.GetDysfunctionalHardwareAsync())
+        {
+            if (categoryByHardwareInfo.ContainsKey(item.hardwareInfoID))
+            {
+                categoryByHardwareInfo[item.hardwareInfoID].Add(new DysfunctionalHardware { categoryName = item.categoryName });
+            }
+            else
+            {
+                categoryByHardwareInfo.Add(item.hardwareInfoID, new List<DysfunctionalHardware>() {new DysfunctionalHardware {categoryName = item.categoryName }});
+                hardwareInfoByNode.Add(new DysfunctionalHardware{
+                    hardwareInfoID = item.hardwareInfoID, nodeName = item.nodeName, detailsUrl = item.detailsUrl, alertMessage = item.alertMessage
+                    });
+            }
+        }
+
+        foreach (var item in overviewSymantec)
+        {
+            List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Symantec");
+            detailsSymantecAppBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var list in detailsSymantecAppBySeverity.Values)
+        {
+            foreach (var item in list)
+            {
+                List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
+                detailsComponentByApp.Add(item.applicationID, singleComponentList);
+            }
+        }
+
+        foreach (var item in overviewVeeam)
+        {
+            List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Veeam");
+            detailsVeeamAppBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var list in detailsVeeamAppBySeverity.Values)
+        {
+            foreach (var item in list)
+            {
+                List<DetailsComponent> singleComponentList = await DetailsAPMService.GetDetailsComponentAsync(item.applicationID);
+                detailsComponentByApp.Add(item.applicationID, singleComponentList);
+            }
         }
         StateHasChanged();
     }
