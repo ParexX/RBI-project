@@ -45,6 +45,39 @@
         }
       },
       {
+        "HashCode": 739925200,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.Fetch_App",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Fetch_App"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Fetch_App"
+        }
+      },
+      {
+        "HashCode": 1302279463,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.Fetch_App",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorSupervisionRBI.Pages.Fetch_App"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Fetch_App",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": -196981187,
         "Kind": "Components.Component",
         "Name": "BlazorSupervisionRBI.Pages.FetchData",
@@ -107,39 +140,6 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorSupervisionRBI.Pages.Index",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": 739925200,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Fetch_App",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "Fetch_App"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Fetch_App"
-        }
-      },
-      {
-        "HashCode": 1302279463,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Fetch_App",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorSupervisionRBI.Pages.Fetch_App"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Fetch_App",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
