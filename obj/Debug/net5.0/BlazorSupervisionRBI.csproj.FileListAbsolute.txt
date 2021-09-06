@@ -492,3 +492,5 @@ C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\RazorDeclaration\Pages\No
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\Razor\Pages\Node.razor.g.cs
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\RazorDeclaration\Pages\SymantecVeeam.razor.g.cs
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\Razor\Pages\SymantecVeeam.razor.g.cs
+C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\RazorDeclaration\Pages\Hardware.razor.g.cs
+C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\Razor\Pages\Hardware.razor.g.cs
