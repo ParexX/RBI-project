@@ -3,16 +3,16 @@
 @inject OverviewService OverviewService
 @inject DetailsNodeService DetailsNodeService
 
-<div class="accordion" style="width:500px" id="accordionNode">
-    <h2 class="text-center"> Node severity</h2>
+<div class="accordion"  id="accordionNode">
+    <h2 class="text-center mb-3"> Serveur par niveau d'incidence</h2>
     @foreach (var item in overviewNode)
     {
-        <div class="accordion-item">
+        <div class="accordion-item mb-3">
             <h2 class="accordion-header" id="header@(item.severity)">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapse@(item.severity)" aria-expanded="false"
-                aria-controls="collapse@(item.severity)">
-                    @item.countSeverity node(s) in @CommonClass.statusLayout[item.severity][0] state
+                aria-controls="collapse@(item.severity)" style="text-align:center;background-color:@CommonClass.statusLayout[@item.severity][1];display:block;">
+                    <h4>@item.countSeverity node(s) in @CommonClass.statusLayout[item.severity][0] state</h4>
                 </button>
             </h2>
             <div id="collapse@(item.severity)" class="accordion-collapse collapse" aria-labelledby="header@(item.severity)"
@@ -21,19 +21,19 @@
                     <table class="table table-striped" style="width:100%,padding:0px;">
                         <thead>
                             <tr>
-                                <th>Node Name</th>
-                                <th>Customer Code</th>
-                                <th>CS Code</th>
+                                <th>Code client</th>
+                                <th>Code CS</th>
+                                <th>Nom du serveur</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var detail in detailsNodeBySeverity[item.severity])
                             {
                                 <tr>
-                                    <td><a href=@(CommonClass.solarWindsLink+detail.detailsUrl) class="link"
-                                    style="text-decoration: none">@detail.nodeName</a></td>
                                     <td>@detail.codeClient</td>
                                     <td>@detail.codeCS</td>
+                                    <td><a href=@(CommonClass.solarWindsLink+detail.detailsUrl) class="link"
+                                    style="text-decoration: none">@detail.nodeName</a></td>
                                 </tr>
                             }
                         </tbody>
@@ -44,47 +44,22 @@
     }
 </div>
 
-@foreach (KeyValuePair<string, List<DetailsNode>> kvp in detailsNodeByCustomer)
-{
-    <div class="d-inline-block card m-2 ms-0" style="width:23%">
-        <h5 class="card-header" style="background-color:@CommonClass.statusLayout[statusByCustomer[kvp.Key]][1];">
-            @if (kvp.Key == "")
-            {
-                <span>Code client inconnue</span>
-            }
-            else
-            {
-                @kvp.Key
-            }
-        </h5>
-        <div class="card-body">
-            <ul class="list-group list-group-flush">
-                @foreach (var value in kvp.Value)
-                {
-                    <li class="list-group-item"><i class="bi bi-circle-fill pe-2"
-                    style="color:@(CommonClass.statusLayout[value.nodeStatus][1])"></i><a
-                    href=@(CommonClass.solarWindsLink+value.detailsUrl) class="link"
-                    style="text-decoration: none">@value.nodeName</a>
-                        @if (value.codeCS != "")
-                        {
-                            <span> - </span>@value.codeCS
-                            ;
-                        }
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>
-}
 <div class="accordion" id="accordionCDIVALDO">
+    <h2 class="text-center m-4">Serveur par client</h2>
     @foreach (KeyValuePair<string, List<DetailsNode>> kvp in detailsNodeByCustomer)
     {
-        <div class="d-inline-block accordion-item m-2 ms-0" style="width:23%">
+        <div class="d-inline-block accordion-item mb-3 me-3" style="width:23.5%">
             <h2 class="accordion-header" id="header(@kvp.Key)">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapse@(kvp.Key)"
                 style="height:150px;background-color:@CommonClass.statusLayout[statusByCustomer[kvp.Key]][1]">
-                    <center>@kvp.Key</center>
+                    @if (kvp.Key =="")
+                    {
+                        <h4>CLIENT INCONNU</h4>;
+                    }
+                    else {
+                        <h4>@kvp.Key</h4>
+                    }
                 </button>
             </h2>
             <div class="accordion-collapse collapse" id="collapse@(kvp.Key)" data-bs-parent="#accordionCDIVALDO"
@@ -94,14 +69,16 @@
                         @foreach (var value in kvp.Value)
                         {
                             <li class="list-group-item"><i class="bi bi-circle-fill pe-2"
-                            style="color:@(CommonClass.statusLayout[value.nodeStatus][1])"></i><a
-                            href=@(CommonClass.solarWindsLink+value.detailsUrl) class="link"
-                            style="text-decoration: none">@value.nodeName</a>
-                                @if (value.codeCS != "")
+                            style="color:@(CommonClass.statusLayout[value.nodeStatus][1])"></i>
+                            @if (value.codeCS != "")
                                 {
-                                    <span> - </span>@value.codeCS
+                                    @value.codeCS<span> - </span>
                                     ;
                                 }
+                            <a
+                            href=@(CommonClass.solarWindsLink+value.detailsUrl) class="link"
+                            style="text-decoration: none">@value.nodeName</a>
+                                
                             </li>
                         }
                     </ul>
