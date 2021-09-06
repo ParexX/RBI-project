@@ -45,6 +45,39 @@
         }
       },
       {
+        "HashCode": -1544104979,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.Node",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Node"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Node"
+        }
+      },
+      {
+        "HashCode": -1771293947,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.Node",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorSupervisionRBI.Pages.Node"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Node",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": 739925200,
         "Kind": "Components.Component",
         "Name": "BlazorSupervisionRBI.Pages.Fetch_App",
@@ -74,6 +107,72 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorSupervisionRBI.Pages.Fetch_App",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 1207363063,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "SymantecVeeam"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
+        }
+      },
+      {
+        "HashCode": -1157052224,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": -287006354,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.Hardware",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Hardware"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Hardware"
+        }
+      },
+      {
+        "HashCode": 836594031,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.Hardware",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorSupervisionRBI.Pages.Hardware"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Hardware",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -15905,6 +16004,11 @@
       "FileKind": "componentImport"
     },
     {
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\SymantecVeeam.razor",
+      "TargetPath": "Pages\\SymantecVeeam.razor",
+      "FileKind": "component"
+    },
+    {
       "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\Fetch_App.razor",
       "TargetPath": "Pages\\Fetch_App.razor",
       "FileKind": "component"
@@ -15917,6 +16021,11 @@
     {
       "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Shared\\MainLayout.razor",
       "TargetPath": "Shared\\MainLayout.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\Hardware.razor",
+      "TargetPath": "Pages\\Hardware.razor",
       "FileKind": "component"
     },
     {
