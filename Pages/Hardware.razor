@@ -1,0 +1,64 @@
+@page "/Hardware"
+@inject DysfunctionalHardwareService DysfunctionalHardwareService
+
+<div class="d-block" style="margin-left:auto;margin-right:auto;width:60%">
+    <h2 class="text-center">Alerte materiel </h2>
+    <ul class="list-group list-group" style="text-align:center">
+        @foreach (var item in hardwareInfoByNode)
+        {
+            <a href="@(CommonClass.solarWindsLink+item.detailsUrl)"
+            class="list-group-item list-group-item-action list-group-item-primary fs-5"
+            style="text-decoration: none;">
+            @categoryByHardwareInfo[item.hardwareInfoID].Count  materiel(s) défectueux
+            inclus dans le serveur @item.nodeName
+            @if(item.cdiValdo !=""){
+                <span> du client @item.cdiValdo</span>;
+            }
+            @if(item.csCode !=""){
+                <span> sous contrat : @item.csCode</span>;
+            } 
+            <br><em>@item.alertMessage</em></a>
+            <li class="list-group-item mb-4 fs-4">
+                @foreach (var category in
+            categoryByHardwareInfo[item.hardwareInfoID])
+                {
+                    @category.categoryName <span>&nbsp</span>
+                }
+            </li>
+                
+        }
+    </ul>
+</div>
+
+@code {
+    private Dictionary<int, List<DysfunctionalHardware>> categoryByHardwareInfo = new Dictionary<int,
+        List<DysfunctionalHardware>>();
+    List<DysfunctionalHardware> hardwareInfoByNode = new List<DysfunctionalHardware>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        foreach (var item in await DysfunctionalHardwareService.GetDysfunctionalHardwareAsync())
+        {
+            if (categoryByHardwareInfo.ContainsKey(item.hardwareInfoID))
+            {
+                categoryByHardwareInfo[item.hardwareInfoID].Add(new DysfunctionalHardware { categoryName = item.categoryName });
+            }
+            else
+            {
+                categoryByHardwareInfo.Add(item.hardwareInfoID, new List<DysfunctionalHardware>() {new DysfunctionalHardware
+{categoryName = item.categoryName }});
+                hardwareInfoByNode.Add(new DysfunctionalHardware
+                {
+                    hardwareInfoID = item.hardwareInfoID,
+                    nodeName = item.nodeName,
+                    cdiValdo = item.cdiValdo,
+                    csCode = item.csCode,
+                    detailsUrl = item.detailsUrl,
+                    alertMessage =  item.alertMessage,
+
+                });
+            }
+        }
+        StateHasChanged();
+    }
+}

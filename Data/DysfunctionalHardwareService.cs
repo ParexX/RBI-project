@@ -19,7 +19,7 @@ namespace BlazorSupervisionRBI.Data
             builder.InitialCatalog = "OrionSQL";
 
 
-            string sql = $"SELECT HardwareInfoID, C.CategoryName,N.NodeName,HI.LastMessage, HI.DetailsUrl FROM Hardware RIGHT JOIN HardwareInfo HI ON HI.ID = HardwareInfoID";
+            string sql = $"SELECT HardwareInfoID, C.CategoryName, N.NodeName, N.CodeClient, N.CodeCS, HI.LastMessage, HI.DetailsUrl FROM Hardware RIGHT JOIN HardwareInfo HI ON HI.ID = HardwareInfoID";
             sql+=$" LEFT JOIN Node N ON NodeID = N.ID LEFT JOIN Category C ON CategoryID = C.ID WHERE HI.Status = 17 ORDER BY NodeName";
             try
             {
@@ -39,8 +39,10 @@ namespace BlazorSupervisionRBI.Data
                                     hardwareInfoID = reader.GetInt32(0),
                                     categoryName = reader.GetString(1),
                                     nodeName = reader.GetString(2),
-                                    alertMessage = reader.GetString(3),
-                                    detailsUrl = reader.GetString(4)
+                                    cdiValdo = reader.GetString(3),
+                                    csCode = reader.GetString(4),
+                                    alertMessage = reader.GetString(5),
+                                    detailsUrl = reader.GetString(6)
                                 });
                             }
                             connection.Close();

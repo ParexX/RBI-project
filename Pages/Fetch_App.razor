@@ -2,7 +2,6 @@
 
 @using BlazorSupervisionRBI.Data
 
-@inject DysfunctionalHardwareService DysfunctionalHardwareService
 
 
 <div class="positon-absolute top-0 end-100">
@@ -14,51 +13,3 @@
         }
     </div>
 </div>
-
-<div class="d-inline-block">
-    <h2 class="text-center"> Hardware alert </h2>
-    <ul class="list-group list-group">
-        @foreach (var item in hardwareInfoByNode)
-        {
-            <a href="@(CommonClass.solarWindsLink+item.detailsUrl)"
-            class="list-group-item list-group-item-action list-group-item-primary"
-            style="text-decoration: none;">Hardware alert on @item.nodeName : <em>@item.alertMessage</em></a>
-            <li class="list-group-item" style="text-align:center">@foreach (var category in
-            categoryByHardwareInfo[item.hardwareInfoID])
-                {
-                    @category.categoryName <span>&nbsp</span>}</li>
-        }
-    </ul>
-</div>
-}
-
-@code {
-    private Dictionary<int, List<DysfunctionalHardware>> categoryByHardwareInfo = new Dictionary<int,
-        List<DysfunctionalHardware>>();
-    List<DysfunctionalHardware> hardwareInfoByNode = new List<DysfunctionalHardware>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        foreach (var item in await DysfunctionalHardwareService.GetDysfunctionalHardwareAsync())
-        {
-            if (categoryByHardwareInfo.ContainsKey(item.hardwareInfoID))
-            {
-                categoryByHardwareInfo[item.hardwareInfoID].Add(new DysfunctionalHardware { categoryName = item.categoryName });
-            }
-            else
-            {
-                categoryByHardwareInfo.Add(item.hardwareInfoID, new List<DysfunctionalHardware>() {new DysfunctionalHardware
-{categoryName = item.categoryName }});
-                hardwareInfoByNode.Add(new DysfunctionalHardware
-                {
-                    hardwareInfoID = item.hardwareInfoID,
-                    nodeName = item.nodeName,
-                    detailsUrl = item.detailsUrl,
-                    alertMessage =
-                item.alertMessage
-                });
-            }
-        }
-        StateHasChanged();
-    }
-}

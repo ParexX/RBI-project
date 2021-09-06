@@ -111,35 +111,35 @@
         }
       },
       {
-        "HashCode": 1207363063,
+        "HashCode": -287006354,
         "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+        "Name": "BlazorSupervisionRBI.Pages.Hardware",
         "AssemblyName": "BlazorSupervisionRBI",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "SymantecVeeam"
+            "TagName": "Hardware"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Hardware"
         }
       },
       {
-        "HashCode": -1157052224,
+        "HashCode": 836594031,
         "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+        "Name": "BlazorSupervisionRBI.Pages.Hardware",
         "AssemblyName": "BlazorSupervisionRBI",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
+            "TagName": "BlazorSupervisionRBI.Pages.Hardware"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Hardware",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
