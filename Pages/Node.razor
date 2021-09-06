@@ -44,40 +44,74 @@
     }
 </div>
 
+@foreach (KeyValuePair<string, List<DetailsNode>> kvp in detailsNodeByCustomer)
+{
+    <div class="d-inline-block card m-2 ms-0" style="width:23%">
+        <h5 class="card-header" style="background-color:@CommonClass.statusLayout[statusByCustomer[kvp.Key]][1];">
+            @if (kvp.Key == "")
+            {
+                <span>Code client inconnue</span>
+            }
+            else
+            {
+                @kvp.Key
+            }
+        </h5>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                @foreach (var value in kvp.Value)
+                {
+                    <li class="list-group-item"><i class="bi bi-circle-fill pe-2"
+                    style="color:@(CommonClass.statusLayout[value.nodeStatus][1])"></i><a
+                    href=@(CommonClass.solarWindsLink+value.detailsUrl) class="link"
+                    style="text-decoration: none">@value.nodeName</a>
+                        @if (value.codeCS != "")
+                        {
+                            <span> - </span>@value.codeCS
+                            ;
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+<div class="accordion" id="accordionCDIVALDO">
     @foreach (KeyValuePair<string, List<DetailsNode>> kvp in detailsNodeByCustomer)
     {
-        <div class="d-inline-block card m-2 ms-0" style="width:23%">
-            <h5 class="card-header" style="background-color:@CommonClass.statusLayout[statusByCustomer[kvp.Key]][1];">
-                @if (kvp.Key == "")
-                {
-                    <span>Code client inconnue</span>
-                }
-                else
-                {
-                    @kvp.Key
-                }
-            </h5>
-            <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    @foreach (var value in kvp.Value)
-                    {
-                        <li class="list-group-item"><i class="bi bi-circle-fill pe-2"
-                        style="color:@(CommonClass.statusLayout[value.nodeStatus][1])"></i><a
-                        href=@(CommonClass.solarWindsLink+value.detailsUrl) class="link"
-                        style="text-decoration: none">@value.nodeName</a>
-                            @if (value.codeCS != "")
-                            {
-                                <span> - </span>@value.codeCS
-                                ;
-                            }
-                        </li>
-                    }
-                </ul>
+        <div class="d-inline-block accordion-item m-2 ms-0" style="width:23%">
+            <h2 class="accordion-header" id="header(@kvp.Key)">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse@(kvp.Key)"
+                style="height:150px;background-color:@CommonClass.statusLayout[statusByCustomer[kvp.Key]][1]">
+                    <center>@kvp.Key</center>
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="collapse@(kvp.Key)" data-bs-parent="#accordionCDIVALDO"
+            aria-labelledby="header@(kvp.Key)">
+                <div class="accordion-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var value in kvp.Value)
+                        {
+                            <li class="list-group-item"><i class="bi bi-circle-fill pe-2"
+                            style="color:@(CommonClass.statusLayout[value.nodeStatus][1])"></i><a
+                            href=@(CommonClass.solarWindsLink+value.detailsUrl) class="link"
+                            style="text-decoration: none">@value.nodeName</a>
+                                @if (value.codeCS != "")
+                                {
+                                    <span> - </span>@value.codeCS
+                                    ;
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+
             </div>
         </div>
     }
+</div>
 
-    
 
 
 @code {
