@@ -1,0 +1,133 @@
+@page "/Node"
+
+@inject OverviewService OverviewService
+@inject DetailsNodeService DetailsNodeService
+
+<div class="accordion"  id="accordionNode">
+    <h2 class="text-center mb-3"> Serveur par niveau d'incidence</h2>
+    @foreach (var item in overviewNode)
+    {
+        <div class="accordion-item mb-3">
+            <h2 class="accordion-header" id="header@(item.severity)">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse@(item.severity)" aria-expanded="false"
+                aria-controls="collapse@(item.severity)" style="text-align:center;background-color:@CommonClass.statusLayout[@item.severity][1];display:block;">
+                    <h4>@item.countSeverity node(s) in @CommonClass.statusLayout[item.severity][0] state</h4>
+                </button>
+            </h2>
+            <div id="collapse@(item.severity)" class="accordion-collapse collapse" aria-labelledby="header@(item.severity)"
+            data-bs-parent="#accordionNode">
+                <div class="accordion-body">
+                    <table class="table table-striped" style="width:100%,padding:0px;">
+                        <thead>
+                            <tr>
+                                <th>Code client</th>
+                                <th>Code CS</th>
+                                <th>Nom du serveur</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var detail in detailsNodeBySeverity[item.severity])
+                            {
+                                <tr>
+                                    <td>@detail.codeClient</td>
+                                    <td>@detail.codeCS</td>
+                                    <td><a href=@(CommonClass.solarWindsLink+detail.detailsUrl) class="link"
+                                    style="text-decoration: none">@detail.nodeName</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="accordion" id="accordionCDIVALDO">
+    <h2 class="text-center m-4">Serveur par client</h2>
+    @foreach (KeyValuePair<string, List<DetailsNode>> kvp in detailsNodeByCustomer)
+    {
+        <div class="d-inline-block accordion-item mb-3 me-3" style="width:23.5%">
+            <h2 class="accordion-header" id="header(@kvp.Key)">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse@(kvp.Key)"
+                style="height:150px;background-color:@CommonClass.statusLayout[statusByCustomer[kvp.Key]][1]">
+                    @if (kvp.Key =="")
+                    {
+                        <h4>CLIENT INCONNU</h4>;
+                    }
+                    else {
+                        <h4>@kvp.Key</h4>
+                    }
+                </button>
+            </h2>
+            <div class="accordion-collapse collapse" id="collapse@(kvp.Key)" data-bs-parent="#accordionCDIVALDO"
+            aria-labelledby="header@(kvp.Key)">
+                <div class="accordion-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var value in kvp.Value)
+                        {
+                            <li class="list-group-item"><i class="bi bi-circle-fill pe-2"
+                            style="color:@(CommonClass.statusLayout[value.nodeStatus][1])"></i>
+                            @if (value.codeCS != "")
+                                {
+                                    @value.codeCS<span> - </span>
+                                    ;
+                                }
+                            <a
+                            href=@(CommonClass.solarWindsLink+value.detailsUrl) class="link"
+                            style="text-decoration: none">@value.nodeName</a>
+                                
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+
+
+
+@code {
+    private List<Overview> overviewNode;
+    private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
+    private Dictionary<string, List<DetailsNode>> detailsNodeByCustomer = new Dictionary<string, List<DetailsNode>>();
+    private Dictionary<string, int> statusByCustomer = new Dictionary<string, int>();
+    protected override async Task OnInitializedAsync()
+    {
+        overviewNode = await OverviewService.GetNodeBySeverityAsync();
+        foreach (var item in overviewNode)
+        {
+            List<DetailsNode> singleDetailList = await DetailsNodeService.GetDetailsNodeBySeverityAsync(item.severity);
+            detailsNodeBySeverity.Add(item.severity, singleDetailList);
+        }
+
+        foreach (var item in await DetailsNodeService.GetDetailsNodeAsync())
+        {
+            if (detailsNodeByCustomer.ContainsKey(item.codeClient))
+            {
+                detailsNodeByCustomer[item.codeClient].Add(item);
+            }
+            else
+            {
+                detailsNodeByCustomer.Add(item.codeClient, new List<DetailsNode>() { item });
+                List<Overview> singleList = await OverviewService.GetSeverityByCustomerAsync(item.codeClient);
+                int max = 0;
+                for (int i = 0; i < singleList.Count; i++)
+                {
+                    for (int j = i; j < singleList.Count; j++)
+                    {
+                        if (Math.Max(singleList[i].severity, singleList[j].severity) > max)
+                        {
+                            max = Math.Max(singleList[i].severity, singleList[j].severity);
+                        }
+                    }
+                }
+                statusByCustomer.Add(item.codeClient, max);
+            }
+        }
+    }
+}

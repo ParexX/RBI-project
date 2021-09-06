@@ -2,7 +2,6 @@
 
 @using BlazorSupervisionRBI.Data
 @inject OverviewService OverviewService
-@inject DetailsNodeService DetailsNodeService
 @inject DysfunctionalHardwareService DysfunctionalHardwareService
 @inject DetailsAPMService DetailsAPMService
 
@@ -15,57 +14,19 @@ else
     <div class="positon-absolute top-0 end-100">
         <h3>Legend</h3>
         <div class="list-group">
-            @foreach (var item in statusLayout.Values)
+            @foreach (var item in CommonClass.statusLayout.Values)
             {
                 <span><i class="bi bi-circle-fill" style="color:@(item[1])"></i>&nbsp @item[0] </span>
             }
         </div>
     </div>
-    <div class="accordion" style="width:500px" id="accordionNode">
-        <h2 class="text-center"> Node severity</h2>
-        @foreach (var item in overviewNode)
-        {
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="header@(item.severity)">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse@(item.severity)" aria-expanded="false"
-                aria-controls="collapse@(item.severity)">
-                        @item.countSeverity node(s) in @statusLayout[item.severity][0] state
-                    </button>
-                </h2>
-                <div id="collapse@(item.severity)" class="accordion-collapse collapse" aria-labelledby="header@(item.severity)"
-            data-bs-parent="#accordionNode">
-                    <div class="accordion-body">
-                        <table class="table table-striped" style="width:100%,padding:0px;">
-                            <thead>
-                                <tr>
-                                    <th>Node Name</th>
-                                    <th>Customer Code</th>
-                                    <th>CS Code</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var detail in detailsNodeBySeverity[item.severity])
-                                {
-                                    <tr>
-                                        <td><a href=@(solarWindsLink+detail.detailsUrl) class="link" style="text-decoration: none">@detail.nodeName</a></td>
-                                        <td>@detail.codeClient</td>
-                                        <td>@detail.codeCS</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
+    
     <div class="d-inline-block">
         <h2 class="text-center"> Hardware alert </h2>
         <ul class="list-group list-group">
             @foreach (var item in hardwareInfoByNode)
             {
-                <a href="@(solarWindsLink+item.detailsUrl)" class="list-group-item list-group-item-action list-group-item-primary" style="text-decoration: none;">Hardware alert on @item.nodeName : <em>@item.alertMessage</em></a>
+                <a href="@(CommonClass.solarWindsLink+item.detailsUrl)" class="list-group-item list-group-item-action list-group-item-primary" style="text-decoration: none;">Hardware alert on @item.nodeName : <em>@item.alertMessage</em></a>
                 <li class="list-group-item" style="text-align:center">@foreach (var category in
             categoryByHardwareInfo[item.hardwareInfoID])
                     {
@@ -83,7 +44,7 @@ else
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsee@(item.severity)" aria-expanded="false"
                 aria-controls="#collapsee@(item.severity)">
-                        @item.countSeverity application(s) in @statusLayout[@item.severity][0] state
+                        @item.countSeverity application(s) in @CommonClass.statusLayout[@item.severity][0] state
                     </button>
                 </h2>
                 <div class="accordion-collapse collapse" id="collapsee@(item.severity)"
@@ -101,7 +62,7 @@ else
                                 @foreach (var application in detailsSymantecAppBySeverity[item.severity])
                                 {
                                     <tr>
-                                        <td><a href="@(solarWindsLink+application.detailsUrl)" class="link" style="text-decoration: none;">@application.applicationName</a></td>
+                                        <td><a href="@(CommonClass.solarWindsLink+application.detailsUrl)" class="link" style="text-decoration: none;">@application.applicationName</a></td>
                                         <td>@application.nodeName</td>
                                         <td>
                                             <div class="accordion-item">
@@ -119,8 +80,8 @@ else
                                                        detailsComponentByApp[@application.applicationID])
                                                         {
                                                             <span><i class="bi bi-circle-fill"
-                                                    style="color:@(statusLayout[component.componentStatus][1])"></i>&nbsp
-                                                               <a href="@(solarWindsLink+component.detailsUrl)" class="link" style="text-decoration: none;"> @component.componentName </a><br /></span>
+                                                    style="color:@(CommonClass.statusLayout[component.componentStatus][1])"></i>&nbsp
+                                                               <a href="@(CommonClass.solarWindsLink+component.detailsUrl)" class="link" style="text-decoration: none;"> @component.componentName </a><br /></span>
                                                         }
                                                     </div>
                                                 </div>
@@ -145,7 +106,7 @@ else
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapseee@(item.severity)" aria-expanded="false"
                 aria-controls="#collapseee@(item.severity)">
-                        @item.countSeverity application(s) in @statusLayout[@item.severity][0] state
+                        @item.countSeverity application(s) in @CommonClass.statusLayout[@item.severity][0] state
                     </button>
                 </h2>
                 <div class="accordion-collapse collapse" id="collapseee@(item.severity)"
@@ -163,7 +124,7 @@ else
                                 @foreach (var application in detailsVeeamAppBySeverity[item.severity])
                                 {
                                     <tr>
-                                        <td><a href="@(solarWindsLink+application.detailsUrl)" class="link" style="text-decoration: none;">@application.applicationName</a></td>
+                                        <td><a href="@(CommonClass.solarWindsLink+application.detailsUrl)" class="link" style="text-decoration: none;">@application.applicationName</a></td>
                                         <td>@application.nodeName</td>
                                         <td>
                                             <div class="accordion-item">
@@ -181,8 +142,8 @@ else
                                                        detailsComponentByApp[@application.applicationID])
                                                         {
                                                             <span><i class="bi bi-circle-fill"
-                                                    style="color:@(statusLayout[component.componentStatus][1])"></i>&nbsp
-                                                                <a href="@(solarWindsLink+component.detailsUrl)" class="link" style="text-decoration: none;">@component.componentName</a><br /></span>
+                                                    style="color:@(CommonClass.statusLayout[component.componentStatus][1])"></i>&nbsp
+                                                                <a href="@(CommonClass.solarWindsLink+component.detailsUrl)" class="link" style="text-decoration: none;">@component.componentName</a><br /></span>
                                                         }
                                                     </div>
                                                 </div>
@@ -201,19 +162,8 @@ else
 }
 
 @code {
-    private string solarWindsLink = "http://supervision.cloudrbi.com";
     private List<Overview> overviewSymantec;
     private List<Overview> overviewVeeam;
-    private List<Overview> overviewNode;
-    private Dictionary<int, List<string>> statusLayout = new Dictionary<int, List<string>>(){
-{0,new List<string>{"unknown","lighblue"}},
-{2,new List<string>{"down","tomato"}},
-{3,new List<string>{"warning","gold"}},
-{12, new List<string>{"unreachable","mediumblue"}},
-{14, new List<string>{"critical","red"}},
-{27, new List<string>{"disabled","grey"}}
-};
-    private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
     private Dictionary<int, List<DysfunctionalHardware>> categoryByHardwareInfo = new Dictionary<int, List<DysfunctionalHardware>>();
     List<DysfunctionalHardware> hardwareInfoByNode = new List<DysfunctionalHardware>();
     Dictionary<int, List<DetailsAPM>> detailsSymantecAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
@@ -224,13 +174,9 @@ else
     {
         overviewSymantec = await OverviewService.GetAppBySeverityAsync("Symantec");
         overviewVeeam = await OverviewService.GetAppBySeverityAsync("Veeam");
-        overviewNode = await OverviewService.GetNodeBySeverityAsync();
+        
 
-        foreach (var item in overviewNode)
-        {
-            List<DetailsNode> singleDetailList = await DetailsNodeService.GetDetailsNodeAsync(item.severity);
-            detailsNodeBySeverity.Add(item.severity, singleDetailList);
-        }
+       
 
         foreach (var item in await DysfunctionalHardwareService.GetDysfunctionalHardwareAsync())
         {

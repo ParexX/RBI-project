@@ -118,21 +118,10 @@ using BlazorSupervisionRBI.Data;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 203 "C:\Users\ADOMEON\BlazorSupervisionRBI\Pages\Fetch_App.razor"
+#line 164 "C:\Users\ADOMEON\BlazorSupervisionRBI\Pages\Fetch_App.razor"
        
-    private string solarWindsLink = "http://supervision.cloudrbi.com";
     private List<Overview> overviewSymantec;
     private List<Overview> overviewVeeam;
-    private List<Overview> overviewNode;
-    private Dictionary<int, List<string>> statusLayout = new Dictionary<int, List<string>>(){
-{0,new List<string>{"unknown","lighblue"}},
-{2,new List<string>{"down","tomato"}},
-{3,new List<string>{"warning","gold"}},
-{12, new List<string>{"unreachable","mediumblue"}},
-{14, new List<string>{"critical","red"}},
-{27, new List<string>{"disabled","grey"}}
-};
-    private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
     private Dictionary<int, List<DysfunctionalHardware>> categoryByHardwareInfo = new Dictionary<int, List<DysfunctionalHardware>>();
     List<DysfunctionalHardware> hardwareInfoByNode = new List<DysfunctionalHardware>();
     Dictionary<int, List<DetailsAPM>> detailsSymantecAppBySeverity = new Dictionary<int, List<DetailsAPM>>();
@@ -143,13 +132,9 @@ using BlazorSupervisionRBI.Data;
     {
         overviewSymantec = await OverviewService.GetAppBySeverityAsync("Symantec");
         overviewVeeam = await OverviewService.GetAppBySeverityAsync("Veeam");
-        overviewNode = await OverviewService.GetNodeBySeverityAsync();
+        
 
-        foreach (var item in overviewNode)
-        {
-            List<DetailsNode> singleDetailList = await DetailsNodeService.GetDetailsNodeAsync(item.severity);
-            detailsNodeBySeverity.Add(item.severity, singleDetailList);
-        }
+       
 
         foreach (var item in await DysfunctionalHardwareService.GetDysfunctionalHardwareAsync())
         {
@@ -203,7 +188,6 @@ using BlazorSupervisionRBI.Data;
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private DetailsAPMService DetailsAPMService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private DysfunctionalHardwareService DysfunctionalHardwareService { get; set; }
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private DetailsNodeService DetailsNodeService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private OverviewService OverviewService { get; set; }
     }
 }
