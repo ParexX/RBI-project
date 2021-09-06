@@ -6,5 +6,6 @@ namespace BlazorSupervisionRBI {
         public string codeClient{get;set;}
         public string codeCS{get;set;}
         public int nodeStatus{get;set;}
+        public string detailsUrl{get;set;}
     }
 }

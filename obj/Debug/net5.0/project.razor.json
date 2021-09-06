@@ -15925,6 +15925,11 @@
       "FileKind": "component"
     },
     {
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\Node.razor",
+      "TargetPath": "Pages\\Node.razor",
+      "FileKind": "component"
+    },
+    {
       "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\App.razor",
       "TargetPath": "App.razor",
       "FileKind": "component"

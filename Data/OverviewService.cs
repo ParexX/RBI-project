@@ -59,7 +59,46 @@ namespace BlazorSupervisionRBI.Data
             builder.InitialCatalog = "OrionSQL";
 
 
-            string sql = $"SELECT Status,COUNT(Status) FROM Node WHERE Status <> 1 GROUP BY Status ORDER BY Status DESC;";
+            string sql = "SELECT Status,COUNT(Status) FROM Node WHERE Status <> 1 GROUP BY Status ORDER BY Status DESC;";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            List<Overview> items = new List<Overview>();
+                            while (reader.Read())
+                            {
+                                items.Add(new Overview
+                                {
+                                    severity = reader.GetInt32(0),
+                                    countSeverity = reader.GetInt32(1)
+                                });
+                            }
+                            return Task.FromResult(items);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{e.Message}");
+                return null;
+            }
+        }
+        public Task<List<Overview>> GetSeverityByCustomerAsync(string CodeClient)
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "SRVJIRA\\SQLJIRA";
+            builder.UserID = "Orion";
+            builder.Password = "orionrbi";
+            builder.InitialCatalog = "OrionSQL";
+
+
+            string sql = $"SELECT Status,COUNT(Status) FROM Node WHERE CodeClient = '{CodeClient}' GROUP BY Status ORDER BY Status DESC;";
             try
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
