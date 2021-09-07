@@ -45,39 +45,6 @@
         }
       },
       {
-        "HashCode": -1544104979,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Node",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "Node"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Node"
-        }
-      },
-      {
-        "HashCode": -1771293947,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Node",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorSupervisionRBI.Pages.Node"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Node",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
         "HashCode": 739925200,
         "Kind": "Components.Component",
         "Name": "BlazorSupervisionRBI.Pages.Fetch_App",
@@ -111,35 +78,68 @@
         }
       },
       {
-        "HashCode": -287006354,
+        "HashCode": -1544104979,
         "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Hardware",
+        "Name": "BlazorSupervisionRBI.Pages.Node",
         "AssemblyName": "BlazorSupervisionRBI",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "Hardware"
+            "TagName": "Node"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Hardware"
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Node"
         }
       },
       {
-        "HashCode": 836594031,
+        "HashCode": -1771293947,
         "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Hardware",
+        "Name": "BlazorSupervisionRBI.Pages.Node",
         "AssemblyName": "BlazorSupervisionRBI",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "BlazorSupervisionRBI.Pages.Hardware"
+            "TagName": "BlazorSupervisionRBI.Pages.Node"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Hardware",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.Node",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 1207363063,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "SymantecVeeam"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
+        }
+      },
+      {
+        "HashCode": -1157052224,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
