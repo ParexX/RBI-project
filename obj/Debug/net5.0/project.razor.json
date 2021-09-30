@@ -12,6 +12,39 @@
   "ProjectWorkspaceState": {
     "TagHelpers": [
       {
+        "HashCode": 1207363063,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "SymantecVeeam"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
+        }
+      },
+      {
+        "HashCode": -1157052224,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": -287006354,
         "Kind": "Components.Component",
         "Name": "BlazorSupervisionRBI.Pages.Hardware",
@@ -74,92 +107,6 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorSupervisionRBI.Pages.Node",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": 1207363063,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "SymantecVeeam"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
-        }
-      },
-      {
-        "HashCode": -1157052224,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.SymantecVeeam",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorSupervisionRBI.Pages.SymantecVeeam"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": 43492846,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Shared.SurveyPrompt",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "SurveyPrompt"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "Title",
-            "TypeName": "System.String",
-            "Metadata": {
-              "Common.PropertyName": "Title"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Shared.SurveyPrompt"
-        }
-      },
-      {
-        "HashCode": -56974727,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Shared.SurveyPrompt",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorSupervisionRBI.Shared.SurveyPrompt"
-          }
-        ],
-        "BoundAttributes": [
-          {
-            "Kind": "Components.Component",
-            "Name": "Title",
-            "TypeName": "System.String",
-            "Metadata": {
-              "Common.PropertyName": "Title"
-            }
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Shared.SurveyPrompt",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -256,6 +203,59 @@
           "Runtime.Name": "Components.None",
           "Common.TypeName": "BlazorSupervisionRBI.Shared.MainLayout.Body",
           "Components.IsSpecialKind": "Components.ChildContent",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 43492846,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Shared.SurveyPrompt",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "SurveyPrompt"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "Title",
+            "TypeName": "System.String",
+            "Metadata": {
+              "Common.PropertyName": "Title"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Shared.SurveyPrompt"
+        }
+      },
+      {
+        "HashCode": -56974727,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.Shared.SurveyPrompt",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorSupervisionRBI.Shared.SurveyPrompt"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "Title",
+            "TypeName": "System.String",
+            "Metadata": {
+              "Common.PropertyName": "Title"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.Shared.SurveyPrompt",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
