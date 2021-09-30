@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorSupervisionRBI;
-
+using BlazorSupervisionRBI.Shared;
 namespace BlazorSupervisionRBI.Data
 {
     public class DetailsNodeService
@@ -15,7 +15,7 @@ namespace BlazorSupervisionRBI.Data
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "SRVJIRA\\SQLJIRA";
             builder.UserID = "Orion";
-            builder.Password = "orionrbi";
+            builder.Password = "orionrbi092021";
             builder.InitialCatalog = "OrionSQL";
 
 
@@ -65,10 +65,10 @@ namespace BlazorSupervisionRBI.Data
         public Task<List<DetailsNode>> GetDetailsNodeAsync()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "SRVJIRA\\SQLJIRA";
-            builder.UserID = "Orion";
-            builder.Password = "orionrbi";
-            builder.InitialCatalog = "OrionSQL";
+            builder.DataSource = CommonClass.credentials["server"];
+            builder.UserID = CommonClass.credentials["user"];
+            builder.Password = CommonClass.credentials["pwd"];
+            builder.InitialCatalog = CommonClass.credentials["database"];
 
 
             string sql = $"SELECT CodeClient, NodeName, CodeCS, Status, DetailsUrl FROM Node ORDER BY CodeClient, Status DESC, NodeName;";

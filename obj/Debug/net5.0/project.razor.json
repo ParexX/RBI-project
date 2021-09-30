@@ -1,5 +1,5 @@
 {
-  "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\BlazorSupervisionRBI.csproj",
+  "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\BlazorSupervisionRBI.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "5.0",
@@ -11,39 +11,6 @@
   },
   "ProjectWorkspaceState": {
     "TagHelpers": [
-      {
-        "HashCode": 1093601336,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Counter",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "Counter"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Counter"
-        }
-      },
-      {
-        "HashCode": 2096080693,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.Pages.Counter",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorSupervisionRBI.Pages.Counter"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.Pages.Counter",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
       {
         "HashCode": -287006354,
         "Kind": "Components.Component",
@@ -140,39 +107,6 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorSupervisionRBI.Pages.SymantecVeeam",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
-        "HashCode": -1646758555,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.App",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "App"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.App"
-        }
-      },
-      {
-        "HashCode": -786256420,
-        "Kind": "Components.Component",
-        "Name": "BlazorSupervisionRBI.App",
-        "AssemblyName": "BlazorSupervisionRBI",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "BlazorSupervisionRBI.App"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorSupervisionRBI.App",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -355,6 +289,39 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorSupervisionRBI.Shared.NavMenu",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": -1646758555,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.App",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "App"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.App"
+        }
+      },
+      {
+        "HashCode": -786256420,
+        "Kind": "Components.Component",
+        "Name": "BlazorSupervisionRBI.App",
+        "AssemblyName": "BlazorSupervisionRBI",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorSupervisionRBI.App"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorSupervisionRBI.App",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -15966,62 +15933,52 @@
   "RootNamespace": "BlazorSupervisionRBI",
   "Documents": [
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\_Imports.razor",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\_Imports.razor",
       "TargetPath": "_Imports.razor",
       "FileKind": "componentImport"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Pages\\SymantecVeeam.razor",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\SymantecVeeam.razor",
       "TargetPath": "Pages\\SymantecVeeam.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Pages\\Fetch_App.razor",
-      "TargetPath": "Pages\\Fetch_App.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Pages\\Error.cshtml",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\Error.cshtml",
       "TargetPath": "Pages\\Error.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Shared\\MainLayout.razor",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Shared\\MainLayout.razor",
       "TargetPath": "Shared\\MainLayout.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Pages\\Hardware.razor",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\Hardware.razor",
       "TargetPath": "Pages\\Hardware.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Shared\\SurveyPrompt.razor",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Shared\\SurveyPrompt.razor",
       "TargetPath": "Shared\\SurveyPrompt.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Pages\\Node.razor",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\Node.razor",
       "TargetPath": "Pages\\Node.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\App.razor",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\App.razor",
       "TargetPath": "App.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Pages\\Counter.razor",
-      "TargetPath": "Pages\\Counter.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Pages\\_Host.cshtml",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Pages\\_Host.cshtml",
       "TargetPath": "Pages\\_Host.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\ADOMEON\\BlazorSupervisionRBI\\Shared\\NavMenu.razor",
+      "FilePath": "c:\\Users\\ADOMEON\\blazorsupervisionrbi\\Shared\\NavMenu.razor",
       "TargetPath": "Shared\\NavMenu.razor",
       "FileKind": "component"
     }

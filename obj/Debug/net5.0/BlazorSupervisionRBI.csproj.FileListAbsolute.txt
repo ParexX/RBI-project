@@ -484,13 +484,10 @@ C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\BlazorSupervisionRBI.dll
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\ref\BlazorSupervisionRBI.dll
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\BlazorSupervisionRBI.pdb
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\BlazorSupervisionRBI.genruntimeconfig.cache
-C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\RazorDeclaration\Pages\Fetch_App.razor.g.cs
-C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\Razor\Pages\Fetch_App.razor.g.cs
-C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\RazorDeclaration\Pages\Counter.razor.g.cs
-C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\Razor\Pages\Counter.razor.g.cs
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\RazorDeclaration\Pages\Node.razor.g.cs
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\Razor\Pages\Node.razor.g.cs
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\RazorDeclaration\Pages\SymantecVeeam.razor.g.cs
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\Razor\Pages\SymantecVeeam.razor.g.cs
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\RazorDeclaration\Pages\Hardware.razor.g.cs
 C:\Users\ADOMEON\BlazorSupervisionRBI\obj\Debug\net5.0\Razor\Pages\Hardware.razor.g.cs
+C:\Users\ADOMEON\BlazorSupervisionRBI\bin\Debug\net5.0\docfx.json

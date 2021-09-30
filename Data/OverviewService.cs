@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorSupervisionRBI;
+using BlazorSupervisionRBI.Shared;
 
 namespace BlazorSupervisionRBI.Data
 {
@@ -15,7 +16,7 @@ namespace BlazorSupervisionRBI.Data
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "SRVJIRA\\SQLJIRA";
             builder.UserID = "Orion";
-            builder.Password = "orionrbi";
+            builder.Password = "orionrbi092021";
             builder.InitialCatalog = "OrionSQL";
 
 
@@ -53,10 +54,10 @@ namespace BlazorSupervisionRBI.Data
         public Task<List<Overview>> GetNodeBySeverityAsync()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "SRVJIRA\\SQLJIRA";
-            builder.UserID = "Orion";
-            builder.Password = "orionrbi";
-            builder.InitialCatalog = "OrionSQL";
+            builder.DataSource = CommonClass.credentials["server"];
+            builder.UserID = CommonClass.credentials["user"];
+            builder.Password = CommonClass.credentials["pwd"];
+            builder.InitialCatalog = CommonClass.credentials["database"];
 
 
             string sql = "SELECT Status,COUNT(Status) FROM Node WHERE Status <> 1 GROUP BY Status ORDER BY Status DESC;";
@@ -94,7 +95,7 @@ namespace BlazorSupervisionRBI.Data
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "SRVJIRA\\SQLJIRA";
             builder.UserID = "Orion";
-            builder.Password = "orionrbi";
+            builder.Password = "orionrbi092021";
             builder.InitialCatalog = "OrionSQL";
 
 

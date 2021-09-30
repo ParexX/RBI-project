@@ -12,6 +12,10 @@ namespace BlazorSupervisionRBI
 {
     public class Program
     {
+        /* 
+        Description : la methode fournit les arguments des methodes InitializeRunSpace et MultiRunScript de la classe HostedRunSpace,
+        a savoir les scripts Powershell à executer, les informations de connexion pour l'authentification et les modules Powershell a importer.  
+        */
         public static async Task RunScript()
         {
             try
@@ -37,7 +41,7 @@ namespace BlazorSupervisionRBI
                     {"mdp","Rbi@nto#357"},
                     {"db", "OrionSQL" },
                     {"id","Orion"},
-                    {"pwdd","orionrbi"}
+                    {"pwdd","orionrbi092021"}
                 };
                 var Runspace = new HostedRunspace();
                 Runspace.InitializeRunspaces(new string[1] { "SwisPowerShell" });
@@ -45,7 +49,8 @@ namespace BlazorSupervisionRBI
                 await Runspace.MultiRunScript(Scripts, ConnexionParameters);
                 while (true)
                 {
-                    if (DateTime.Now.Second == 0)
+                    /// On reexecute touts les scripts passés en argument toutes les 4 minutes
+                    if (DateTime.Now.Second == 0 && DateTime.Now.Minute % 4 == 0)
                         await Runspace.MultiRunScript(Scripts, ConnexionParameters);
                 }
             }
@@ -54,13 +59,19 @@ namespace BlazorSupervisionRBI
                 Console.WriteLine(e.Message);
             }
         }
+
+        /*
+        Description : La methode main execute les scripts et construit l'application.
+        Entree : Les arguments fournis dans l'entrée standart.
+        */
         public static void Main(string[] args)
         {
-            //RunScript();
+            RunScript();
             CreateHostBuilder(args).Build().Run();
 
         }
 
+        // La construction de l'application
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>

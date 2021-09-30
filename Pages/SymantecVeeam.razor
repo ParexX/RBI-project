@@ -21,8 +21,10 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Nom du template Symantec</th>
+                                    <th>Code Client</th>
+                                    <th>Code CS</th>
                                     <th>Nom du serveur</th>
+                                    <th>Nom du template Symantec</th>
                                     <th>Composant(s) en alerte</th>
                                 </tr>
                             </thead>
@@ -30,8 +32,10 @@
                                 @foreach (var application in detailsSymantecAppBySeverity[item.severity])
                                 {
                                     <tr>
-                                        <td><a href="@(CommonClass.solarWindsLink+application.detailsUrl)" class="link" style="text-decoration: none;">@application.applicationName</a></td>
+                                        <td>@application.clientName</td>
+                                        <td>@application.csCode</td>
                                         <td>@application.nodeName</td>
+                                        <td><a href="@(CommonClass.solarWindsLink+application.detailsUrl)" class="link" style="text-decoration: none;">@application.applicationName</a></td>
                                         <td>
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="header@(application.applicationID)">

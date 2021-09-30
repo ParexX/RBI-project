@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using BlazorSupervisionRBI;
+using BlazorSupervisionRBI.Shared;
 
 namespace BlazorSupervisionRBI.Data
 {
@@ -13,10 +14,10 @@ namespace BlazorSupervisionRBI.Data
         public Task<List<DysfunctionalHardware>> GetDysfunctionalHardwareAsync()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "SRVJIRA\\SQLJIRA";
-            builder.UserID = "Orion";
-            builder.Password = "orionrbi";
-            builder.InitialCatalog = "OrionSQL";
+           builder.DataSource = CommonClass.credentials["server"];
+            builder.UserID = CommonClass.credentials["user"];
+            builder.Password = CommonClass.credentials["pwd"];
+            builder.InitialCatalog = CommonClass.credentials["database"];
 
 
             string sql = $"SELECT HardwareInfoID, C.CategoryName, N.NodeName, N.CodeClient, N.CodeCS, HI.LastMessage, HI.DetailsUrl FROM Hardware RIGHT JOIN HardwareInfo HI ON HI.ID = HardwareInfoID";
