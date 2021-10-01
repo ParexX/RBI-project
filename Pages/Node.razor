@@ -96,26 +96,31 @@
     private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();
     private Dictionary<string, List<DetailsNode>> detailsNodeByCustomer = new Dictionary<string, List<DetailsNode>>();
     private Dictionary<string, int> statusByCustomer = new Dictionary<string, int>();
+
     protected override async Task OnInitializedAsync()
     {
         overviewNode = await OverviewService.GetNodeBySeverityAsync();
+        //Peuple les tables de la section  "serveur par niveau d'incidence"
         foreach (var item in overviewNode)
         {
             List<DetailsNode> singleDetailList = await DetailsNodeService.GetDetailsNodeBySeverityAsync(item.severity);
             detailsNodeBySeverity.Add(item.severity, singleDetailList);
         }
-
+        //Peuple la table de "serveur par client"
         foreach (var item in await DetailsNodeService.GetDetailsNodeAsync())
         {
+            //Ajoute le serveur en fonction de la clé deja existante dans la liste de serveur
             if (detailsNodeByCustomer.ContainsKey(item.codeClient))
             {
                 detailsNodeByCustomer[item.codeClient].Add(item);
             }
             else
             {
+                //Si la clé n'est pas encore declarée dans le dictionnaire, on specifie la clé et on instancie une liste de serveur.
                 detailsNodeByCustomer.Add(item.codeClient, new List<DetailsNode>() { item });
                 List<Overview> singleList = await OverviewService.GetSeverityByCustomerAsync(item.codeClient);
                 int max = 0;
+                //Cette double boucle selectionne le plus haut niveau d'incidence parmis les serveurs d'un client.
                 for (int i = 0; i < singleList.Count; i++)
                 {
                     for (int j = i; j < singleList.Count; j++)

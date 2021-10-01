@@ -36,14 +36,17 @@
 
     protected override async Task OnInitializedAsync()
     {
+        //Peuple les alertes materiels
         foreach (var item in await DysfunctionalHardwareService.GetDysfunctionalHardwareAsync())
         {
+            //Specifie le materiel defectueux en fonction de l'alerte materiel deja existante
             if (categoryByHardwareInfo.ContainsKey(item.hardwareInfoID))
             {
                 categoryByHardwareInfo[item.hardwareInfoID].Add(new DysfunctionalHardware { categoryName = item.categoryName });
             }
             else
             {
+                //Si l'alerte n'est pas declaré, on la declare dans la liste hardwareInfoID et on ajoute le materiel defectueux
                 categoryByHardwareInfo.Add(item.hardwareInfoID, new List<DysfunctionalHardware>() {new DysfunctionalHardware
 {categoryName = item.categoryName }});
                 hardwareInfoByNode.Add(new DysfunctionalHardware

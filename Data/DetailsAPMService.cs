@@ -11,9 +11,16 @@ namespace BlazorSupervisionRBI.Data
 {
     public class DetailsAPMService
     {
+        /*
+            Description : Recupere le detail des applications pour un état et un logiciel donné.
+            Entrees : 
+                    appStatus : Le status de l'applciation
+                    software : Le logiciel, soit Symantec ou Veeam.
+        */
         public Task<List<DetailsAPM>> GetDetailsAPMAsync(int appStatus, string software)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            //Specifie les informations de connexion à la base de données SQL.
             builder.DataSource = CommonClass.credentials["server"];
             builder.UserID = CommonClass.credentials["user"];
             builder.Password = CommonClass.credentials["pwd"];
@@ -31,10 +38,10 @@ namespace BlazorSupervisionRBI.Data
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                       
                         using (SqlDataReader reader = command.ExecuteReader())
                         { 
                             List<DetailsAPM> items = new List<DetailsAPM>();
+                            //Instancie des objets du modele DetailsAPM à partir des données recuperées par la requête SQL
                             while (reader.Read())
                             {
                                 items.Add(new DetailsAPM
@@ -55,38 +62,44 @@ namespace BlazorSupervisionRBI.Data
                    
                 }
             }
-            catch(SqlException e){
+            catch(SqlException e){//Affiche une erreur generée par la requête SQL
                 Console.WriteLine($"{e.Message}\n{e.StackTrace}");
                 return null;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine($"{e.Message}");
+            catch(InvalidOperationException e){//Affiche une erreur de connexion
+                Console.WriteLine("La connection est deja ouverte");
+                Console.WriteLine(e.Message);
                 return null;
             }
         }
-
+        /*
+            Description : Recupere le detail des composants d'une application.
+            Entree:
+                applicationID : L'identifiant de l'application
+        */
         public Task<List<DetailsComponent>> GetDetailsComponentAsync(int applicationID)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "SRVJIRA\\SQLJIRA";
-            builder.UserID = "Orion";
-            builder.Password = "orionrbi092021";
-            builder.InitialCatalog = "OrionSQL";
+            //Specifie les informations de connexion à la base de données SQL.
+            builder.DataSource = CommonClass.credentials["server"];
+            builder.UserID = CommonClass.credentials["user"];
+            builder.Password = CommonClass.credentials["pwd"];
+            builder.InitialCatalog = CommonClass.credentials["database"];
 
 
-            string sql = $"SELECT ComponentName, SeverityStatus, ApplicationID, Component.DetailsUrl FROM Component LEFT JOIN Application A ON A.ID = ApplicationID WHERE ApplicationID={applicationID} AND SeverityStatus <>1 ORDER BY SeverityStatus DESC ";
+            string sql = "SELECT ComponentName, SeverityStatus, ApplicationID, Component.DetailsUrl FROM Component";
+            sql += $"LEFT JOIN Application A ON A.ID = ApplicationID WHERE ApplicationID={applicationID} AND SeverityStatus <>1 ORDER BY SeverityStatus DESC ";
             try
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
                 {
                     connection.Open();
                     using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                       
+                    { 
                         using (SqlDataReader reader = command.ExecuteReader())
                         { 
                             List<DetailsComponent> items = new List<DetailsComponent>();
+                            //Instancie des objets du modele DetailsComponent à partir des données recuperées par la requête SQL
                             while (reader.Read())
                             {
                                 items.Add(new DetailsComponent
@@ -104,13 +117,13 @@ namespace BlazorSupervisionRBI.Data
                    
                 }
             }
-            catch(SqlException e){
-                Console.WriteLine(e.Message);
+            catch(SqlException e){//Affiche une erreur generée par la requête SQL
+                Console.WriteLine($"{e.Message}\n{e.StackTrace}");
                 return null;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine($"{e.Message}");
+            catch(InvalidOperationException e){//Affiche une erreur de connexion
+                Console.WriteLine("La connection est deja ouverte");
+                Console.WriteLine(e.Message);
                 return null;
             }
         }

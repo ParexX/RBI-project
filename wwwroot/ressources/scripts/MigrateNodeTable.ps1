@@ -14,21 +14,19 @@ $sqlConnection.Open()
 
 #### Vérifier que la connexion fonctionne avant d'aller plus loin
 if ($sqlConnection.State -ne [Data.ConnectionState]::Open) {
-
     "Impossible d'ouvrir la connexion."
-
     Exit
 }
 
 write-output "Connexion réussie"
-
+### Try Catch Gobal pour garantir la fermeture de la connexion SQL
 try { 
     try {  
         $Command = New-Object System.Data.SQLClient.SQLCommand 
         $Command.Connection = $sqlConnection
         Get-SwisData $swis 'SELECT NodeID ,NodeName , NCP.CDIVALDO, NCP.CodeCS, N.Status, DetailsUrl FROM Orion.Nodes N LEFT JOIN Orion.NodesCustomProperties NCP ON N.NodeID = NCP.NodeID;' | ForEach-Object {
-        $Command.CommandText += "INSERT INTO Node VALUES($($_.NodeID),'$($_.NodeName)','$($_.CDIVALDO)','$($_.CodeCS)',$($_.Status),'$($_.DetailsUrl)');" 
-        $Command.Parameters.Clear();
+            ### Les données de type string sont converties en varchar en les mettants entre guillemets
+            $Command.CommandText += "INSERT INTO Node VALUES($($_.NodeID),'$($_.NodeName)','$($_.CDIVALDO)','$($_.CodeCS)',$($_.Status),'$($_.DetailsUrl)');" 
         }
         $Command.ExecuteNonQuery();
     }

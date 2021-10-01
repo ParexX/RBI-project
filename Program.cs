@@ -14,13 +14,14 @@ namespace BlazorSupervisionRBI
     {
         /* 
         Description : la methode fournit les arguments des methodes InitializeRunSpace et MultiRunScript de la classe HostedRunSpace,
-        a savoir les scripts Powershell à executer, les informations de connexion pour l'authentification et les modules Powershell a importer.  
+        à savoir les scripts Powershell à executer, les informations de connexion aux base de données Orion et SQL et les modules Powershell à importer.  
         */
         public static async Task RunScript()
         {
             try
             {
-                var pathScripts = "wwwroot/ressources/scripts";
+                var pathScripts = "wwwroot/ressources/scripts";// Le chemin relatif du dossier des scripts
+                //On stocke dans un tableau le contenu des scripts.
                 var Scripts = new string[]{
                 File.ReadAllText($"{pathScripts}\\ClearData.ps1",Encoding.UTF8),
                 File.ReadAllText($"{pathScripts}\\MigrateApplicationTemplate.ps1",Encoding.UTF8),
@@ -33,7 +34,7 @@ namespace BlazorSupervisionRBI
                 File.ReadAllText($"{pathScripts}\\MigrateHardwareTable.ps1",Encoding.UTF8)
                 };
 
-
+                //On stocke dans un dictionnaire les paramètres de connexion communs à tous les scripts
                 var ConnexionParameters = new Dictionary<string, object>()
                 {
                     {"hostname","Orion.cloudrbi.com"},
@@ -43,18 +44,18 @@ namespace BlazorSupervisionRBI
                     {"id","Orion"},
                     {"pwdd","orionrbi092021"}
                 };
-                var Runspace = new HostedRunspace();
-                Runspace.InitializeRunspaces(new string[1] { "SwisPowerShell" });
-                
-                await Runspace.MultiRunScript(Scripts, ConnexionParameters);
+                var Runspace = new HostedRunspace(); 
+                Runspace.InitializeRunspaces();//On instancie l'environnemnt d'execution des scripst PowerShell
+                // On execute les scripts
+                await Runspace.RunScripts(Scripts, ConnexionParameters);
                 while (true)
                 {
-                    /// On reexecute touts les scripts passés en argument toutes les 4 minutes
+                    /// On reexecute touts les scripts toutes les 4 minutes
                     if (DateTime.Now.Second == 0 && DateTime.Now.Minute % 4 == 0)
-                        await Runspace.MultiRunScript(Scripts, ConnexionParameters);
+                        await Runspace.RunScripts(Scripts, ConnexionParameters);
                 }
             }
-            catch (DirectoryNotFoundException e)
+            catch (DirectoryNotFoundException e)// Si l'objet statique File ne trouve pas les scripts powershell à lire, retourne dans la console
             {
                 Console.WriteLine(e.Message);
             }
@@ -71,7 +72,7 @@ namespace BlazorSupervisionRBI
 
         }
 
-        // La construction de l'application
+        // Description : Methode generée par le project, construit l'application.
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>

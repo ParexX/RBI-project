@@ -139,12 +139,13 @@
     {
         overviewSymantec = await OverviewService.GetAppBySeverityAsync("Symantec");
         overviewVeeam = await OverviewService.GetAppBySeverityAsync("Veeam");
+        //Peuple les tables de la section "Alerte Symantec"
         foreach (var item in overviewSymantec)
         {
             List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Symantec");
             detailsSymantecAppBySeverity.Add(item.severity, singleDetailList);
         }
-
+        //Peuple la liste de composants pour chaque application en état d'alerte.
         foreach (var list in detailsSymantecAppBySeverity.Values)
         {
             foreach (var item in list)
@@ -153,13 +154,13 @@
                 detailsComponentByApp.Add(item.applicationID, singleComponentList);
             }
         }
-
+        //Peuple les tables de la section "Alerte Symantec"
         foreach (var item in overviewVeeam)
         {
             List<DetailsAPM> singleDetailList = await DetailsAPMService.GetDetailsAPMAsync(item.severity, "Veeam");
             detailsVeeamAppBySeverity.Add(item.severity, singleDetailList);
         }
-
+        //Peuple la liste de composants pour chaque application en état d'alerte.
         foreach (var list in detailsVeeamAppBySeverity.Values)
         {
             foreach (var item in list)

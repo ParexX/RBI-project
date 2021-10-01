@@ -7,40 +7,36 @@ using System.Threading.Tasks;
 
 namespace BlazorSupervisionRBI
 {
-    /// <summary>
-    /// Contains functionality for executing PowerShell scripts.
-    /// </summary>
     public class HostedRunspace
     {
+        // Rs : Envronnement d'execution des scripts powershell.
         private Runspace Rs {get;set;}
-        /// <summary>
-        /// Runs a PowerShell script with parameters and prints the resulting pipeline objects to the console output. 
-        /// </summary>
-        /// <param name="scriptContents">The script file contents.</param>
-        /// <param name="scriptParameters">A dictionary of parameter names and parameter values.</param>
 
-        public void InitializeRunspaces(string[] modulesToLoad)
+        /*
+        Description : Instancie l'environnement d'execution. On ne declare q'une seule instance car le processeur execute un seul script à la fois.
+        */
+        public void InitializeRunspaces()
         {
-            // create the default session state.
-            // session state can be used to set things like execution policy, language constraints, etc.
-            // optionally load any modules (by name) that were supplied.
-
-            var defaultSessionState = InitialSessionState.CreateDefault();
-            defaultSessionState.ExecutionPolicy = Microsoft.PowerShell.ExecutionPolicy.Unrestricted;
-            
-            foreach (var moduleName in modulesToLoad)
-            {
-                defaultSessionState.ImportPSModule(moduleName);
+            try{
+                Rs = RunspaceFactory.CreateRunspace();
+                Rs.Open();
             }
-            Rs = RunspaceFactory.CreateRunspace(defaultSessionState);
-            Rs.Open();
+            catch (InvalidRunspaceStateException ex)//Retourne une exception à l'appel de la methode Open
+            {
+                Console.WriteLine("L'environnemnt d'execution est deja ouvert");
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
         }
-    
-        public async Task MultiRunScript(string[] stringContents, Dictionary<string, object> scriptParameters) 
+        /*
+        Description : Execute les scripts un par un
+        Entree :
+                stringContents : Le code source des scripts Powershell
+                scriptParameters : Les paramètres de connexion aux base de données Orion et SQL.
+        */
+        public async Task RunScripts(string[] stringContents, Dictionary<string, object> scriptParameters) 
         {
-            // create a new hosted PowerShell instance using the default runspace.
-            // wrap in a using statement to ensure resources are cleaned up.
-            if (Rs == null)
+            if (Rs == null)//Verifie si l'environnement d'execution est bien instancié.
             {
                 throw new ApplicationException("Runspace must be initialized before calling RunScript().");
             }
@@ -48,18 +44,25 @@ namespace BlazorSupervisionRBI
             var BeginTime = new TimeSpan();
             Console.WriteLine(DateTime.Now.TimeOfDay);
             foreach(string script in stringContents){
+                /*
+                Le block using appelle la methode Dispose de l'objet PowerShell instancié entre les parenthèses.
+                La methode Dispose gere l'allocation de ressource au objet.
+                Dans ce contexte, l'objet Powershell ajoute le script et ses paramètres et supprime ces ressources après l'execution du script,
+                de sorte à ne pas surcharger inutilement la liste de scripts que l'objet PowerShell doit éxecuter.
+                */
                 using (PowerShell ps = PowerShell.Create()){
                         ps.Runspace = Rs;           
                         BeginTime = DateTime.Now.TimeOfDay;
-                        ps.AddScript(script);// specify the script code to run.
-                        ps.AddParameters(scriptParameters); // specify the parameters to pass into the script
+                        ps.AddScript(script);// ajoute le script à executer.
+                        ps.AddParameters(scriptParameters); // ajoute les paramètres de connexion
                         try {
                             pipelineObjects = await ps.InvokeAsync().ConfigureAwait(false);
-                        }// execute the script and await the result
+                        }// execute le script et attend le resultat.
                         catch(Exception e){Console.WriteLine($"Exception : {e}");}
                         foreach (var item in pipelineObjects){
-                            Console.WriteLine(item.BaseObject.ToString());// print the resulting pipeline objects to the console.
+                            Console.WriteLine(item.BaseObject.ToString());// affiche ce que retourne le script dans le terminal.
                         }
+                        //Decompte le temps d'execution du script.
                         Console.WriteLine($"Temps d'execution : {DateTime.Now.TimeOfDay - BeginTime}");
                 }
             }   

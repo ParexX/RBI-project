@@ -118,7 +118,7 @@ using System.Data.SqlClient;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 94 "C:\Users\ADOMEON\BlazorSupervisionRBI\Pages\Node.razor"
+#line 95 "C:\Users\ADOMEON\BlazorSupervisionRBI\Pages\Node.razor"
        
     private List<Overview> overviewNode;
     private Dictionary<int, List<DetailsNode>> detailsNodeBySeverity = new Dictionary<int, List<DetailsNode>>();

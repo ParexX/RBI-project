@@ -1,6 +1,13 @@
 using System;
 
-namespace BlazorSupervisionRBI {
+namespace BlazorSupervisionRBI.Data {
+    /*
+    nodeName : Nom du serveur
+    codeClient : Code client
+    codeCS : Code CS 
+    nodeStatus : Etat du serveur
+    detailsUrl : Redirecion vers le logiciel Solarwinds
+    */
     public class DetailsNode {
         public string nodeName{get;set;}
         public string codeClient{get;set;}

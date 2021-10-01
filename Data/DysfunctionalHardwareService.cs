@@ -11,10 +11,14 @@ namespace BlazorSupervisionRBI.Data
 {
     public class DysfunctionalHardwareService
     {
+        /*
+        Description : Récupere le detail du materiel(s) defectueu(x) et le detail du serveur.
+        */
         public Task<List<DysfunctionalHardware>> GetDysfunctionalHardwareAsync()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-           builder.DataSource = CommonClass.credentials["server"];
+            //Specifie les informations de connexion à la base de données SQL.
+            builder.DataSource = CommonClass.credentials["server"];
             builder.UserID = CommonClass.credentials["user"];
             builder.Password = CommonClass.credentials["pwd"];
             builder.InitialCatalog = CommonClass.credentials["database"];
@@ -33,6 +37,7 @@ namespace BlazorSupervisionRBI.Data
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             List<DysfunctionalHardware> items = new List<DysfunctionalHardware>();
+                            //Instancie des objets du modele DysfunctionalHardware à partir des données recuperées par la requête SQL
                             while (reader.Read())
                             {
                                 items.Add(new DysfunctionalHardware
@@ -53,14 +58,13 @@ namespace BlazorSupervisionRBI.Data
 
                 }
             }
-            catch (SqlException e)
-            {
-                Console.WriteLine(e.Message);
+            catch(SqlException e){//Affiche une erreur generée par la requête SQL
+                Console.WriteLine($"{e.Message}\n{e.StackTrace}");
                 return null;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine($"{e.Message}");
+            catch(InvalidOperationException e){//Affiche une erreur de connexion
+                Console.WriteLine("La connection est deja ouverte");
+                Console.WriteLine(e.Message);
                 return null;
             }
         }

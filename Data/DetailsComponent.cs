@@ -1,7 +1,13 @@
 using System;
 
-namespace BlazorSupervisionRBI
+namespace BlazorSupervisionRBI.Data
 {
+    /*
+        applicationID : Id de l'application
+        componentName : Nom du composant
+        componentStatus : Etat du composant
+        detailsUrl : Redirecion vers le logiciel Solarwinds 
+    */
     public class DetailsComponent
     {
         public int applicationId { get; set; }
