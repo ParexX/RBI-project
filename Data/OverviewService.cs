@@ -18,10 +18,10 @@ namespace BlazorSupervisionRBI.Data
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             //Specifie les informations de connexion à la base de données SQL.
-            builder.DataSource = "SRVJIRA\\SQLJIRA";
-            builder.UserID = "Orion";
-            builder.Password = "orionrbi092021";
-            builder.InitialCatalog = "OrionSQL";
+            builder.DataSource = CommonClass.credentials["server"];
+            builder.UserID = CommonClass.credentials["user"];
+            builder.Password = CommonClass.credentials["pwd"];
+            builder.InitialCatalog = CommonClass.credentials["database"];
 
 
             string sql = $"SELECT  Status, COUNT(Status) FROM Application A LEFT JOIN ApplicationTemplate AT ON A.ApplicationTemplateID = AT.ID LEFT JOIN Tag T ON AT.ID = T.TemplateID WHERE T.TagName = '{software}' AND Status<> 1 GROUP BY Status ORDER BY Status DESC; ";
@@ -109,10 +109,10 @@ namespace BlazorSupervisionRBI.Data
         public Task<List<Overview>> GetSeverityByCustomerAsync(string CodeClient)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            builder.DataSource = "SRVJIRA\\SQLJIRA";
-            builder.UserID = "Orion";
-            builder.Password = "orionrbi092021";
-            builder.InitialCatalog = "OrionSQL";
+            builder.DataSource = CommonClass.credentials["server"];
+            builder.UserID = CommonClass.credentials["user"];
+            builder.Password = CommonClass.credentials["pwd"];
+            builder.InitialCatalog = CommonClass.credentials["database"];
 
 
             string sql = $"SELECT Status FROM Node WHERE CodeClient = '{CodeClient}' GROUP BY Status ORDER BY Status DESC;";
